@@ -4,8 +4,10 @@ import {
   Column,
   OneToOne,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { Boletim } from "./Boletim.entity";
+import { Endereco } from "./Endereco.entity";
 import { Policial } from "./Policial.entity";
 import { Procurado } from "./Procurado.entity";
 import { Veiculo } from "./Veiculo.entity";
@@ -41,4 +43,8 @@ export class Cidadao {
 
   @OneToMany(() => Procurado, (procurado) => procurado.cidadao)
   procurado: Procurado[];
+
+  @OneToOne(() => Endereco, { eager: true })
+  @JoinColumn()
+  endereco: Endereco;
 }
