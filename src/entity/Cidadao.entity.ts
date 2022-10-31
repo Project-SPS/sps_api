@@ -1,7 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany } from "typeorm";
-import { Boletim } from "./Boletim";
-import { Policial } from "./Policial";
-import { Veiculo } from "./Veiculo";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  OneToMany,
+} from "typeorm";
+import { Boletim } from "./Boletim.entity";
+import { Policial } from "./Policial.entity";
+import { Procurado } from "./Procurado.entity";
+import { Veiculo } from "./Veiculo.entity";
 
 @Entity()
 export class Cidadao {
@@ -31,4 +38,7 @@ export class Cidadao {
 
   @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao)
   veiculo: Veiculo[];
+
+  @OneToMany(() => Procurado, (procurado) => procurado.cidadao)
+  procurado: Procurado[];
 }

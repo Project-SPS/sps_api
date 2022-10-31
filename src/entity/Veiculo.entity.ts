@@ -1,7 +1,15 @@
 import { Blob } from "buffer";
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, ManyToOne } from "typeorm";
-import { Boletim } from "./Boletim";
-import { Cidadao } from "./Cidadao";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  OneToMany,
+  ManyToOne,
+} from "typeorm";
+import { Boletim } from "./Boletim.entity";
+import { Cidadao } from "./Cidadao.entity";
+import { VeiculoMulta } from "./VeiculoMulta.entity";
 
 @Entity()
 export class Veiculo {
@@ -31,4 +39,7 @@ export class Veiculo {
 
   @OneToMany(() => Boletim, (boletim) => boletim.veiculo)
   boletim: Boletim[];
+
+  @OneToMany(() => VeiculoMulta, (veiculoMulta) => veiculoMulta.veiculo)
+  veiculoMulta: VeiculoMulta[];
 }

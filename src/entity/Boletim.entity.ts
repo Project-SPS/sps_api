@@ -1,7 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm";
-import { Cidadao } from "./Cidadao";
-import { Policial } from "./Policial";
-import { Veiculo } from "./Veiculo";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+} from "typeorm";
+import { Cidadao } from "./Cidadao.entity";
+import { Policial } from "./Policial.entity";
+import { Veiculo } from "./Veiculo.entity";
 
 @Entity()
 export class Boletim {
