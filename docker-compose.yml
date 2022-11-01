@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: sps_api
+    build: .
+    ports:
+      - $PORT:$PORT
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app_api
+    command: bash -c "yarn migrate && yarn start"
+
+  db:
+    container_name: db
+    image: postgres:14-alpine
+    ports:
+      - $PGPORT:$PGPORT
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_PASSWORD"]
+      interval: 15s
+      timeout: 30s
+      retries: 5
+      start_period: 5s
+    volumes:
+      - .:/app_db

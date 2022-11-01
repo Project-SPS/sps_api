@@ -4,9 +4,10 @@
   "main": "server.ts",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/server.ts",
-    "dev": "ts-node-dev src/server.ts",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "start": "ts-node --experimental-specifier-resolution=node src/server.ts",
+    "dev": "ts-node-dev --experimental-specifier-resolution=node src/server.ts",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migrate": "typeorm-ts-node-commonjs migration:run -d src/data-source.ts"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
