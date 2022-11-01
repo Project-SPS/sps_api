@@ -1,17 +1,24 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { User } from "./entity/Policial.entity";
 
-export const AppDataSource = new DataSource({
-  type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "test",
-  password: "test",
-  database: "test",
-  synchronize: true,
-  logging: false,
-  entities: [User],
-  migrations: [],
-  subscribers: [],
-});
+export const AppDataSource = new DataSource(
+  process.env.NODE_ENV === "test"
+    ? {
+        type: "sqlite",
+        database: ":memory:",
+        synchronize: true,
+        entities: ["src/entity/*.ts"],
+      }
+    : {
+        type: "postgres",
+        host: process.env.HOST,
+        port: process.env.PGPORT ? +process.env.PGPORT : 5432,
+        username: process.env.POSTGRES_USER,
+        password: process.env.POSTGRES_PASSWORD,
+        database: process.env.DB,
+        synchronize: false,
+        logging: true,
+        entities: ["src/entity/*.ts"],
+        migrations: ["src/migrations/*.ts"],
+      }
+);
