@@ -21,7 +21,7 @@ export class Veiculo {
   @Column({ type: "varchar", length: 50 })
   marca: string;
 
-  @Column({ type: "year", length: 4 })
+  @Column({ type: "date", length: 4 })
   ano: Date;
 
   @Column({ type: "varchar", length: 17 })
