@@ -11,3 +11,8 @@ export interface IPolicialResponse extends IPolicialRequest {
   data_criacao: Date;
   data_atualizacao: Date;
 }
+
+export interface IPolicialLogin {
+  cod_registro: number;
+  senha: string;
+}
