@@ -1,18 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToOne,
-  OneToMany,
-  JoinColumn,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn } from "typeorm";
 import { Boletim } from "./Boletim.entity";
 import { Endereco } from "./Endereco.entity";
 import { Policial } from "./Policial.entity";
 import { Procurado } from "./Procurado.entity";
 import { Veiculo } from "./Veiculo.entity";
 
-@Entity()
+@Entity("cidadaos")
 export class Cidadao {
   @PrimaryGeneratedColumn("uuid")
   id: string;

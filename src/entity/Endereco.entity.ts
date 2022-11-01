@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Cidadao } from "./Cidadao.entity";
 
 @Entity("enderecos")
 export class Endereco {
@@ -25,4 +26,7 @@ export class Endereco {
 
   @Column({ type: "varchar", length: 10 })
   cep: string;
+
+  @OneToOne(() => Cidadao)
+  cidadao: Cidadao;
 }
