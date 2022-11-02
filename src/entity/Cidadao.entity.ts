@@ -13,13 +13,13 @@ export class Cidadao {
   @Column({ type: "varchar", length: 120 })
   nome: string;
 
-  @Column({ type: "integer", length: 3 })
+  @Column({ type: "integer" })
   idade: number;
 
   @Column({ type: "varchar", length: 120, unique: true })
   email: string;
 
-  @Column({ type: "varchar", length: 14, unique: true })
+  @Column({ type: "varchar", length: 11, unique: true })
   cpf: string;
 
   @Column({ type: "date" })
@@ -39,5 +39,5 @@ export class Cidadao {
 
   @OneToOne(() => Endereco, { eager: true })
   @JoinColumn()
-  endereco: Endereco;
+  endereco: string;
 }

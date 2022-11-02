@@ -7,7 +7,8 @@
     "start": "ts-node --experimental-specifier-resolution=node src/server.ts",
     "dev": "ts-node-dev --experimental-specifier-resolution=node src/server.ts",
     "typeorm": "typeorm-ts-node-commonjs",
-    "migrate": "typeorm-ts-node-commonjs migration:run -d src/data-source.ts"
+    "migrate": "typeorm-ts-node-commonjs migration:run -d src/data-source.ts",
+    "test": "jest"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
