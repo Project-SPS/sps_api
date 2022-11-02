@@ -13,7 +13,7 @@ export class Cidadao {
   @Column({ type: "varchar", length: 120 })
   nome: string;
 
-  @Column({ type: "integer", length: 3 })
+  @Column({ type: "integer"})
   idade: number;
 
   @Column({ type: "varchar", length: 120, unique: true })
