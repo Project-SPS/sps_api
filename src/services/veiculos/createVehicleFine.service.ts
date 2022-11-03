@@ -6,7 +6,7 @@ import { IVehicleRequest } from "../../interfaces/veiculo.interfaces";
 import retrieveVehicleService from "./retrieveVehicle.service";
 
 const createVehicleFineService = async (
-  data: IVehicleRequest,
+  identifier: string,
   multaId: string
 ) => {
   const multaRepository = await AppDataSource.getRepository(Multa);
@@ -14,7 +14,7 @@ const createVehicleFineService = async (
     VeiculoMulta
   );
 
-  const vehicle = await retrieveVehicleService(data);
+  const vehicle = await retrieveVehicleService(identifier);
 
   const fine = await multaRepository.findOneBy({
     id: multaId,
