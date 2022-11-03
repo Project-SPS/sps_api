@@ -1,13 +1,22 @@
 export interface IPolicialRequest {
-  cod_registro: number;
+  cod_registro: string;
   patente: string;
   senha: string;
   administrador: boolean;
 }
 
-export interface IPolicialResponse extends IPolicialRequest {
+export interface IPolicialResponse {
   id: string;
+  cod_registro: string;
+  patente: string;
+  administrador: boolean;
   ativo: boolean;
   data_criacao: Date;
   data_atualizacao: Date;
+}
+
+export interface IPolicialUpdate {
+  patente?: string;
+  administrador?: boolean;
+  senha?: string;
 }
