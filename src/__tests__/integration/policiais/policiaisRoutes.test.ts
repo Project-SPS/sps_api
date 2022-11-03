@@ -147,13 +147,35 @@ describe("/policiais", () => {
     expect(listResponse.body).toHaveLength(1);
   });
 
-  it("UPDATE /policiais/:id - Apenas o próprio usuário pode atualizar sua senha.", async () => {
-    const loginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
-    //pegar o policial
+  it("GET /policiais/:cod_registro - Não deve ser possível listar um policial por código de registro sem ser administrador", async () => {
+    const nonAdminLoginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const listResponse = await request(app)
+      .get(`/policiais/${mockedPolice.cod_registro}`)
+      .set("Authorization", `Bearer ${nonAdminLoginResponse.body.token}`)
+      .send();
 
+    expect(listResponse.status).toBe(403);
+    expect(listResponse.body).toHaveProperty("message");
+  });
+
+  it("UPDATE /policiais/:id - Deve ser possível o próprio usuário atualizar sua senha.", async () => {
+    const loginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
     const updateResponse = await request(app)
-      .patch("/policiais/")
+      .patch(`/policiais/${mockedPolice.cod_registro}`)
       .set("Authorization", `Bearer ${loginResponse.body.token}`)
       .send({ senha: "novaSenha123!" });
+
+    expect(updateResponse.status).toBe(200);
+    expect(updateResponse.body).toHaveProperty("id");
+    expect(updateResponse.body).toHaveProperty("cod_registro");
+    expect(updateResponse.body).toHaveProperty("patente");
+    expect(updateResponse.body).toHaveProperty("administrador");
+    expect(updateResponse.body).toHaveProperty("data_criacao");
+    expect(updateResponse.body).toHaveProperty("data_atualizacao");
+    expect(updateResponse.body).toHaveProperty("nome");
+    expect(updateResponse.body).toHaveProperty("idade");
+    expect(updateResponse.body).toHaveProperty("cpf");
+    expect(updateResponse.body).toHaveProperty("email");
+    expect(updateResponse.body).toHaveProperty("data_nascimento");
   });
 });
