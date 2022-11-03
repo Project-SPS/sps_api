@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn } from "typeorm";
-import { Boletim } from "./Boletim.entity";
 import { Endereco } from "./Endereco.entity";
-import { Policial } from "./Policial.entity";
-import { Procurado } from "./Procurado.entity";
-import { Veiculo } from "./Veiculo.entity";
+// import { Boletim } from "./Boletim.entity";
+// import { Policial } from "./Policial.entity";
+// import { Procurado } from "./Procurado.entity";
+// import { Veiculo } from "./Veiculo.entity";
 
 @Entity("cidadaos")
 export class Cidadao {
@@ -25,19 +25,19 @@ export class Cidadao {
   @Column({ type: "date" })
   data_nascimento: Date;
 
-  @OneToOne(() => Policial)
-  policial: Policial;
+  // @OneToOne(() => Policial, { eager: true })
+  // policial: Policial;
 
-  @OneToMany(() => Boletim, (boletim) => boletim.cidadao)
-  boletim: Boletim[];
+  // @OneToMany(() => Boletim, (boletim) => boletim.cidadao, { eager: true })
+  // boletim: Boletim[];
 
-  @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao)
-  veiculo: Veiculo[];
+  // @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao, { eager:true })
+  // veiculo: Veiculo[];
 
-  @OneToMany(() => Procurado, (procurado) => procurado.cidadao)
-  procurado: Procurado[];
+  // @OneToMany(() => Procurado, (procurado) => procurado.cidadao, { eager: true })
+  // procurado: Procurado[];
 
   @OneToOne(() => Endereco, { eager: true })
   @JoinColumn()
-  endereco: string;
+  endereco: Endereco;
 }

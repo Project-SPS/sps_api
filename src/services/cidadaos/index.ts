@@ -6,15 +6,15 @@ const citizenRepository = AppDataSource.getRepository(Cidadao)
 
 export const listCitizensService = async () => {
  const citizens = await citizenRepository.find()
-
+ 
  return citizens
 }
 
 export const searchCitizenByCpfService = async ( cpf:string ) => {
  const findCitizen = await citizenRepository.findOneBy({ cpf })
- 
- if (!findCitizen) {
-  throw new AppError('Cidadão não encontrado', 404)
+
+ if (findCitizen === null) {
+  throw new AppError(404, 'Cidadão não encontrado')
  }
  
  return findCitizen

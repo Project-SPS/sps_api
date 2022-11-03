@@ -1,5 +1,5 @@
-import "reflect-metadata";
 import { DataSource } from "typeorm";
+import "reflect-metadata";
 import 'dotenv/config'
 
 export const AppDataSource = new DataSource(
