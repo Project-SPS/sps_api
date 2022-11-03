@@ -19,7 +19,7 @@ services:
     container_name: db_sps
     image: postgres:14-alpine
     ports:
-      - 5434:$PGPORT
+      - $PGPORT:$PGPORT
     env_file:
       - .env
     healthcheck:
