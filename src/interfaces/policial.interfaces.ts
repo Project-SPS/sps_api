@@ -1,5 +1,5 @@
 export interface IPolicialRequest {
-  cod_registro: number;
+  cod_registro: string;
   patente: string;
   senha: string;
   administrador: boolean;
@@ -7,6 +7,9 @@ export interface IPolicialRequest {
 
 export interface IPolicialResponse {
   id: string;
+  cod_registro: string;
+  patente: string;
+  administrador: boolean;
   ativo: boolean;
   data_criacao: Date;
   data_atualizacao: Date;
@@ -18,4 +21,10 @@ export interface IPolicialResponse {
 export interface IPolicialLogin {
   cod_registro: number;
   senha: string;
+}
+
+export interface IPolicialUpdate {
+  patente?: string;
+  administrador?: boolean;
+  senha?: string;
 }

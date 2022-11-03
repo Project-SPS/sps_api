@@ -10,26 +10,27 @@ import listVehicleFinesService from "../../services/veiculos/listVehicleFines.se
 import retrieveVehicleService from "../../services/veiculos/retrieveVehicle.service";
 
 const retrieveVehicleController = async (req: Request, res: Response) => {
-  const data: IVehicleRequest = req.body;
-  const veiculo = await retrieveVehicleService(data);
+  const { identifier } = req.params;
+  const veiculo = await retrieveVehicleService(identifier);
   return res.status(200).json(veiculo);
 };
 
 const listCitizenVehiclesController = async (req: Request, res: Response) => {
-  const { cpf }: ICitizenVehiclesRequest = req.body;
+  const { cpf } = req.params;
   const vehicles = await listCitizenVehiclesService(cpf);
   return res.status(200).json(vehicles);
 };
 
 const listVehicleFinesController = async (req: Request, res: Response) => {
-  const data: IVehicleRequest = req.body;
-  const fines = await listVehicleFinesService(data);
+  const { identifier } = req.params;
+  const fines = await listVehicleFinesService(identifier);
   return res.status(200).json(fines);
 };
 
 const createVehicleFineController = async (req: Request, res: Response) => {
-  const { placa, chassi, multaId }: ICreateVehicleFineRequest = req.body;
-  await createVehicleFineService({ placa, chassi }, multaId);
+  const { identifier } = req.params;
+  const { multaId }: ICreateVehicleFineRequest = req.body;
+  await createVehicleFineService(identifier, multaId);
   return res.status(201).send({
     message: "Vehicle fine created",
   });
