@@ -1,19 +1,15 @@
 import 'reflect-metadata'
 import 'express-async-errors'
 import express from "express";
-import veiculosRouter from "./routes/veiculos.routes";
-import sessionRoutes from "./routes/sessions.routes";
-import { handleErrorMiddleware } from './middlewares/handleError.middleware';
-import cidadaosRoutes from './routes/cidadaos.routes';
+import { handleError } from "./middlewares";
+import { appRoutes } from './routes/index'    
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/veiculos", veiculosRouter);
-app.use("/cidadaos", cidadaosRoutes);
-app.use("/sessions", sessionRoutes);
-app.use(handleErrorMiddleware);
+appRoutes(app);
 
+app.use(handleError);
 
 export default app;
