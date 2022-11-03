@@ -6,11 +6,11 @@ import {
   retrieveVehicleController,
 } from "../controllers/veiculos";
 
-const veiculosRouter = Router();
+const veiculosRoutes = Router();
 
-veiculosRouter.get("", retrieveVehicleController);
-veiculosRouter.get("/cidadao", listCitizenVehiclesController);
-veiculosRouter.get("/multas", listVehicleFinesController);
-veiculosRouter.post("/multas", createVehicleFineController);
+veiculosRoutes.get("", retrieveVehicleController);
+veiculosRoutes.get("/cidadao", listCitizenVehiclesController);
+veiculosRoutes.get("/multas", listVehicleFinesController);
+veiculosRoutes.post("/multas", createVehicleFineController);
 
-export default veiculosRouter;
+export default veiculosRoutes;

@@ -6,7 +6,7 @@ declare global {
             user: {
                 id: string;
                 administrador: boolean;
-                cod_registro: number;
+                cod_registro: string;
             }
         }
     }
