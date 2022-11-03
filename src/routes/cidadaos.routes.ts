@@ -3,7 +3,6 @@ import { listCitizensController, searchCitizenByCpfController } from "../control
 
 const cidadaosRoutes = Router()
 
-//Cidadaos
 cidadaosRoutes.get("", listCitizensController)
 cidadaosRoutes.get("/:cpf", searchCitizenByCpfController)
 
