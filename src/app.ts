@@ -1,14 +1,12 @@
 import express from "express";
 import { handleError } from "./middlewares";
-import veiculosRouter from "./routes/veiculos.routes";
-import sessionRoutes from "./routes/sessions.routes";
+import { appRoutes } from "./routes";
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/veiculos", veiculosRouter);
-app.use("/sessions", sessionRoutes);
+appRoutes(app);
 
 app.use(handleError);
 
