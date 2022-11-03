@@ -15,15 +15,15 @@ services:
       - .:/app_api
     command: bash -c "yarn migrate && yarn start"
 
-  db_sps:
-    container_name: db_sps
+  db:
+    container_name: sps_db
     image: postgres:14-alpine
     ports:
       - 5434:$PGPORT
     env_file:
       - .env
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_PASSWORD"]
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
       interval: 15s
       timeout: 30s
       retries: 5
