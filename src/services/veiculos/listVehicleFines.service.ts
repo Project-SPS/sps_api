@@ -5,12 +5,12 @@ import retrieveVehicleService from "./retrieveVehicle.service";
 import { IVehicleRequest } from "../../interfaces/veiculo.interfaces";
 
 const listVehicleFinesService = async (
-  data: IVehicleRequest
+  identifier: string
 ): Promise<VeiculoMulta[]> => {
   const veiculoMultaRepository = AppDataSource.getRepository(VeiculoMulta);
   const multaRepository = AppDataSource.getRepository(Multa);
 
-  const veiculo = await retrieveVehicleService(data);
+  const veiculo = await retrieveVehicleService(identifier);
 
   const fines = await veiculoMultaRepository.find({
     where: {
