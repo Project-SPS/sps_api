@@ -41,10 +41,6 @@ describe("/policiais", () => {
     await connection.destroy();
   });
 
-  it("GET /policiais - Não deve ser possível listar todos os policial sem ser administrador", async () => {});
-  it("GET /policiais - Deve ser possível listar todos os policiais", async () => {});
-  it("GET /policiais/:id - Deve ser possível listar um policial por código de registro", async () => {});
-
   it("POST /policiais - Deve ser possível criar um policial", async () => {
     const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
     const registerResponse = await request(app)
@@ -122,6 +118,33 @@ describe("/policiais", () => {
 
     expect(registerResponse.status).toBe(400);
     expect(registerResponse.body).toHaveProperty("message");
+  });
+
+  it("GET /policiais - Deve ser possível listar todos os policiais", async () => {
+    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const listResponse = await request(app).get("/policiais").set("Authorization", `Bearer ${adminLoginResponse.body.token}`).send();
+
+    expect(listResponse.status).toBe(200);
+    expect(listResponse.body).toHaveLength(2);
+  });
+
+  it("GET /policiais - Não deve ser possível listar todos os policial sem ser administrador", async () => {
+    const nonAdminLoginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const listResponse = await request(app).get("/policiais").set("Authorization", `Bearer ${nonAdminLoginResponse.body.token}`).send();
+
+    expect(listResponse.status).toBe(403);
+    expect(listResponse.body).toHaveProperty("message");
+  });
+
+  it("GET /policiais/:cod_registro - Deve ser possível listar um policial por código de registro", async () => {
+    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const listResponse = await request(app)
+      .get(`/policiais/${mockedPolice.cod_registro}`)
+      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+      .send();
+
+    expect(listResponse.status).toBe(200);
+    expect(listResponse.body).toHaveLength(1);
   });
 
   it("UPDATE /policiais/:id - Apenas o próprio usuário pode atualizar sua senha.", async () => {
