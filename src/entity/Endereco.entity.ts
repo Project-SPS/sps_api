@@ -24,7 +24,7 @@ export class Endereco {
   @Column({ type: "varchar", length: 2 })
   estado: string;
 
-  @Column({ type: "varchar", length: 10 })
+  @Column({ type: "varchar", length: 8 })
   cep: string;
 
   @OneToOne(() => Cidadao)
