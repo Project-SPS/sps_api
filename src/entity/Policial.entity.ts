@@ -8,7 +8,7 @@
 //   id: string;
 
 //   @Column({ type: "integer", unique: true })
-//   cod_registro: number;
+//   cod_registro: string;
 
 //   @Column({ type: "varchar", length: 120 })
 //   patente: string;
