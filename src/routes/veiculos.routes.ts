@@ -8,9 +8,9 @@ import {
 
 const veiculosRoutes = Router();
 
-veiculosRoutes.get("", retrieveVehicleController);
-veiculosRoutes.get("/cidadao", listCitizenVehiclesController);
-veiculosRoutes.get("/multas", listVehicleFinesController);
-veiculosRoutes.post("/multas", createVehicleFineController);
+veiculosRoutes.get("/:identifier", retrieveVehicleController);
+veiculosRoutes.get("/cidadao/:cpf", listCitizenVehiclesController);
+veiculosRoutes.get("/multas/:identifier", listVehicleFinesController);
+veiculosRoutes.post("/multas/:identifier", createVehicleFineController);
 
 export default veiculosRoutes;
