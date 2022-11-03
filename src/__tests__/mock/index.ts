@@ -17,3 +17,26 @@ export const mockedPolice: IPolicialRequest = {
   patente: "Soldado",
   senha: "nklfesf745ds",
 };
+
+export const nonAdminPoliceLogin: IPolicialLogin = {
+  cod_registro: mockedPolice.cod_registro,
+  senha: mockedPolice.senha,
+};
+
+export const mockedPoliceWithoutRegistrationCode = {
+  administrador: false,
+  patente: "Soldado",
+  senha: "nklfesf745ds",
+};
+
+export const mockedPoliceWithoutRank = {
+  administrador: false,
+  cod_registro: 54135131,
+  senha: "nklfesf745ds",
+};
+
+export const mockedPoliceWithoutPassword = {
+  administrador: false,
+  cod_registro: 78451245,
+  patente: "Capitão",
+};

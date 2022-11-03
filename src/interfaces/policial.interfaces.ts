@@ -5,11 +5,14 @@ export interface IPolicialRequest {
   administrador: boolean;
 }
 
-export interface IPolicialResponse extends IPolicialRequest {
+export interface IPolicialResponse {
   id: string;
   ativo: boolean;
   data_criacao: Date;
   data_atualizacao: Date;
+  cod_registro: number;
+  patente: string;
+  administrador: boolean;
 }
 
 export interface IPolicialLogin {
