@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn } from "typeorm";
-import { Boletim } from "./Boletim.entity";
 import { Endereco } from "./Endereco.entity";
+import { Boletim } from "./Boletim.entity";
 import { Policial } from "./Policial.entity";
 import { Procurado } from "./Procurado.entity";
 import { Veiculo } from "./Veiculo.entity";
@@ -19,22 +19,22 @@ export class Cidadao {
   @Column({ type: "varchar", length: 120, unique: true })
   email: string;
 
-  @Column({ type: "varchar", length: 14, unique: true })
+  @Column({ type: "varchar", length: 11, unique: true })
   cpf: string;
 
   @Column({ type: "date" })
   data_nascimento: Date;
 
-  @OneToOne(() => Policial)
+  @OneToOne(() => Policial, { eager: true })
   policial: Policial;
 
-  @OneToMany(() => Boletim, (boletim) => boletim.cidadao)
+  @OneToMany(() => Boletim, (boletim) => boletim.cidadao, { eager: true })
   boletim: Boletim[];
 
-  @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao)
+  @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao, { eager:true })
   veiculo: Veiculo[];
 
-  @OneToMany(() => Procurado, (procurado) => procurado.cidadao)
+  @OneToMany(() => Procurado, (procurado) => procurado.cidadao, { eager: true })
   procurado: Procurado[];
 
   @OneToOne(() => Endereco, { eager: true })
