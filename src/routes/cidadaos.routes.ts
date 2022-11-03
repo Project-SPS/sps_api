@@ -1,10 +1,10 @@
 import { Router } from "express"
 import { listCitizensController, searchCitizenByCpfController } from "../controllers/cidadaos"
 
-const routes = Router()
+const cidadaosRoutes = Router()
 
 //Cidadaos
-routes.get("/cidadaos", listCitizensController)
-routes.get("/cidadaos/:cpf", searchCitizenByCpfController)
+cidadaosRoutes.get("", listCitizensController)
+cidadaosRoutes.get("/:cpf", searchCitizenByCpfController)
 
-export default routes
+export default cidadaosRoutes

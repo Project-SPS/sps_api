@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/veiculos", veiculosRouter);
-app.use("/cidadaos", cidadaosRoutes)
+app.use("/cidadaos", cidadaosRoutes);
 app.use("/sessions", sessionRoutes);
 app.use(handleErrorMiddleware);
 

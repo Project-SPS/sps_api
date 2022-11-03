@@ -14,7 +14,7 @@ export const searchCitizenByCpfService = async ( cpf:string ) => {
  const findCitizen = await citizenRepository.findOneBy({ cpf })
 
  if (findCitizen === null) {
-  throw new AppError(404, 'Cidadão não encontrado')
+  throw new AppError('Cidadão não encontrado', 404)
  }
  
  return findCitizen
