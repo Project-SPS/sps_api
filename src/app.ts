@@ -1,16 +1,17 @@
+import 'reflect-metadata'
+import 'express-async-errors'
 import express from "express";
-import { handleError } from "./middlewares";
-import policeRoutes from "./routes/policiais.routes";
+import boletimRouter from "./routes/boletim.routes";
+import { handleErrorMiddleware } from "./middlewares";
 import { appRoutes } from "./routes";
 
 const app = express();
 
 app.use(express.json());
+app.use("/boletim",boletimRouter)
 
 appRoutes(app);
 
-app.use(handleError);
-
-app.use("/policiais", policeRoutes);
+app.use(handleErrorMiddleware);
 
 export default app;

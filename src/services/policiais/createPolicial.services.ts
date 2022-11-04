@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Policial } from "../../entity/Policial.entity";
 import { IPolicialRequest } from "../../interfaces/policial.interfaces";
 import { AppError } from "../../errors/AppError";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 
 const createPolicialService = async ({cod_registro, patente, senha, administrador}: IPolicialRequest): Promise<Policial> => {
 
@@ -14,7 +14,7 @@ const createPolicialService = async ({cod_registro, patente, senha, administrado
         throw new AppError("This cod is already being used", 400);
     }
 
-    senha = bcrypt.hashSync(senha, 10);
+    senha = bcryptjs.hashSync(senha, 10);
 
     const newPolice = policeRepository.create({
         cod_registro,

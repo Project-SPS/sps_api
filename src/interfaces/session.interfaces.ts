@@ -1,4 +1,4 @@
 export interface ISessionRequest {
-    cod_registro: number;
+    cod_registro: string;
     senha: string;
 }

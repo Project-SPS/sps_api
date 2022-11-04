@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Cidadao } from "./Cidadao.entity";
 
 @Entity("enderecos")
@@ -24,9 +24,9 @@ export class Endereco {
   @Column({ type: "varchar", length: 2 })
   estado: string;
 
-  @Column({ type: "varchar", length: 10 })
+  @Column({ type: "varchar", length: 8 })
   cep: string;
 
-  @OneToOne(() => Cidadao)
+  @OneToMany(() => Cidadao, (cidadao) => cidadao.endereco)
   cidadao: Cidadao;
 }
