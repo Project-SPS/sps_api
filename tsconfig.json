@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["es5", "es6"],
-    "target": "es5",
+    "target": "ES2016",
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./dist",
@@ -13,6 +13,6 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "strictPropertyInitialization": false,
-    "skipLibCheck": true,
+    "skipLibCheck": true
   }
 }
