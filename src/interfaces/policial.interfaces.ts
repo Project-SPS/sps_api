@@ -16,7 +16,7 @@ export interface IPolicialResponse {
 }
 
 export interface IPolicialLogin {
-  cod_registro: number;
+  cod_registro: string;
   senha: string;
 }
 
