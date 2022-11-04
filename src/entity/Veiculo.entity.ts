@@ -1,5 +1,12 @@
 import { Blob } from "buffer";
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  OneToMany,
+  ManyToOne,
+} from "typeorm";
 import { Boletim } from "./Boletim.entity";
 import { Cidadao } from "./Cidadao.entity";
 import { VeiculoMulta } from "./VeiculoMulta.entity";
