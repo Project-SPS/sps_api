@@ -1,7 +1,7 @@
 import { Boletim } from "../../entity/Boletim.entity";
 import { AppError } from "../../errors/AppError";
 import { AppDataSource } from "../../data-source";
-import { updateBulletinSerializer } from "../../serializer/boletim.serializer";
+import { updateBulletinSerializer } from "../../serializers/boletim.serializer";
 import { IBoletimUpdateRequest } from "../../interfaces/boletim.interfaces";
 
 const updateBulletinService = async (

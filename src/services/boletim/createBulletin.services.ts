@@ -5,7 +5,7 @@ import { Policial } from "../../entity/Policial.entity";
 import { Veiculo } from "../../entity/Veiculo.entity";
 import { Cidadao } from "../../entity/Cidadao.entity";
 import { IBoletimRequest } from "../../interfaces/boletim.interfaces";
-import { createBulletinSerializer } from "../../serializer/boletim.serializer";
+import { createBulletinSerializer } from "../../serializers/boletim.serializer";
 
 
 const createBulletinService = async (data:IBoletimRequest): Promise<Boletim> => {
