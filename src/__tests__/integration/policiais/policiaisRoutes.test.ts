@@ -58,6 +58,7 @@ describe("/policiais", () => {
     expect(registerResponse.body).toHaveProperty("administrador");
     expect(registerResponse.body).toHaveProperty("data_criacao");
     expect(registerResponse.body).toHaveProperty("data_atualizacao");
+    expect(registerResponse.body).toHaveProperty("ativo");
     expect(registerResponse.body).toHaveProperty("nome");
     expect(registerResponse.body).toHaveProperty("idade");
     expect(registerResponse.body).toHaveProperty("cpf");
@@ -158,7 +159,7 @@ describe("/policiais", () => {
     expect(listResponse.body).toHaveProperty("message");
   });
 
-  it("PATCH /policiais/:id - Deve ser possível o próprio usuário atualizar sua senha.", async () => {
+  it("PATCH /policiais/:cod_registro - Deve ser possível o próprio policial atualizar sua senha.", async () => {
     const newPassword = "novaSenha123!";
 
     const loginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
@@ -185,6 +186,75 @@ describe("/policiais", () => {
     const newLoginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
 
     expect(newLoginResponse.status).toBe(200);
-    expect(newLoginResponse.body).toHaveProperty("message");
+    expect(newLoginResponse.body).toHaveProperty("token");
+  });
+
+  it("PATCH /policiais/:cod_registro - Não deve ser possível um policial alterar outro policial.", async () => {
+    const loginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const updateResponse = await request(app)
+      .patch(`/policiais/${adminPoliceLogin.cod_registro}`)
+      .set("Authorization", `Bearer ${loginResponse.body.token}`)
+      .send({ patente: "Recruta" });
+
+    expect(updateResponse.status).toBe(403);
+    expect(updateResponse.body).toHaveProperty("message");
+  });
+
+  it("PATCH /policiais/:cod_registro - Deve ser possível um administrador atualizar outro policial.", async () => {
+    const updateData = {
+      administrador: true,
+      patente: "Comandante Geral",
+      senha: "novaSenha",
+    };
+
+    const loginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const updateResponse = await request(app)
+      .patch(`/policiais/${nonAdminPoliceLogin.cod_registro}`)
+      .set("Authorization", `Bearer ${loginResponse.body.token}`)
+      .send({ ...updateData });
+
+    expect(updateResponse.status).toBe(200);
+    expect(updateResponse.body).toHaveProperty("id");
+    expect(updateResponse.body).toHaveProperty("cod_registro");
+    expect(updateResponse.body).toHaveProperty("patente");
+    expect(updateResponse.body.patente).toEqual(updateData.patente);
+    expect(updateResponse.body).toHaveProperty("administrador");
+    expect(updateResponse.body.administrador).toEqual(updateData.administrador);
+    expect(updateResponse.body).toHaveProperty("data_criacao");
+    expect(updateResponse.body).toHaveProperty("data_atualizacao");
+    expect(updateResponse.body).toHaveProperty("nome");
+    expect(updateResponse.body).toHaveProperty("ativo");
+    expect(updateResponse.body).toHaveProperty("idade");
+    expect(updateResponse.body).toHaveProperty("cpf");
+    expect(updateResponse.body).toHaveProperty("email");
+    expect(updateResponse.body).toHaveProperty("data_nascimento");
+
+    nonAdminPoliceLogin.senha = updateData.senha;
+
+    const newLoginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+
+    expect(newLoginResponse.status).toBe(200);
+    expect(newLoginResponse.body).toHaveProperty("token");
+  });
+
+  it("DELETE /policiais/:cod_registro - Deve ser possível realizar o soft delete", async () => {
+    const loginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const deleteResponse = await request(app)
+      .delete(`/policiais/${nonAdminPoliceLogin.cod_registro}`)
+      .set("Authorization", `Bearer ${loginResponse.body.token}`)
+      .send();
+
+    expect(deleteResponse.status).toBe(204);
+  });
+
+  it("DELELE /policiais/:cod_registro - Não deve ser possível realizar o soft delete sem ser administrador.", async () => {
+    const loginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const deleteResponse = await request(app)
+      .delete(`/policiais/${mockedPolice.cod_registro}`)
+      .set("Authorization", `Bearer ${loginResponse.body.token}`)
+      .send();
+
+    expect(deleteResponse.status).toBe(403);
+    expect(deleteResponse.body).toHaveProperty("message");
   });
 });
