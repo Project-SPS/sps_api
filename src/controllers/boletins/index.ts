@@ -5,11 +5,11 @@ import {
   IBoletimRequest,
   IBoletimUpdateRequest,
 } from "../../interfaces/boletim.interfaces";
-import createBulletinService from "../../service/boletim/createBulletin.service";
-import updateBulletinService from "../../service/boletim/updateBulletin.service";
-import listBulletinCitizenService from "../../service/boletim/listBulletinCitizen.service";
-import listBulletinVehicleService from "../../service/boletim/listBulletinVehicle.service";
-import listBulletinService from "../../service/boletim/listBulletin.service";
+import createBulletinService from "../../services/boletim/createBulletin.services";
+import updateBulletinService from "../../services/boletim/updateBulletin.services";
+import listBulletinCitizenService from "../../services/boletim/listBulletinCitizen.services";
+import listBulletinVehicleService from "../../services/boletim/listBulletinVehicle.services";
+import listBulletinService from "../../services/boletim/listBulletin.services";
 
 const createBulletinController = async (req: Request, res: Response) => {
   const data: IBoletimRequest = req.body;

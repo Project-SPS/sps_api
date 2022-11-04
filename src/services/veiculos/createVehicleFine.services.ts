@@ -3,7 +3,7 @@ import { Multa } from "../../entity/Multa.entity";
 import { VeiculoMulta } from "../../entity/VeiculoMulta.entity";
 import { AppError } from "../../errors/AppError";
 import { IVehicleRequest } from "../../interfaces/veiculo.interfaces";
-import retrieveVehicleService from "./retrieveVehicle.service";
+import retrieveVehicleService from "./retrieveVehicle.services";
 
 const createVehicleFineService = async (
   identifier: string,
