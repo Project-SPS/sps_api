@@ -4,7 +4,7 @@ import { Multa } from "../../entity/Multa.entity";
 const listTrafficTicketService = async () => {
   const trafficTicketsRepository = AppDataSource.getRepository(Multa);
 
-  const trafficTickets = trafficTicketsRepository.find();
+  const trafficTickets = await trafficTicketsRepository.find();
 
   return trafficTickets;
 };
