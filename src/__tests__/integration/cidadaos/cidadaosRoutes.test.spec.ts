@@ -2,6 +2,8 @@ import { AppDataSource } from '../../../data-source'
 import { DataSource } from 'typeorm'
 import request from 'supertest'
 import app from '../../../app'
+import { mockedCitizenNotFound } from '../../mock';
+
 
 describe('Testes para a rota /cidadaos', () => {
  let connection: DataSource
@@ -10,6 +12,7 @@ describe('Testes para a rota /cidadaos', () => {
   await AppDataSource.initialize()
    .then(async (dataSource) => {
     connection = dataSource
+
     await dataSource.query(
      `INSERT INTO enderecos (id, logradouro, numero, bairro, complemento, cidade, estado, cep)
       VALUES
@@ -73,15 +76,16 @@ describe('Testes para a rota /cidadaos', () => {
   expect(response.body).toHaveProperty('email')
   expect(response.body).toHaveProperty('cpf')
   expect(response.body).toHaveProperty('data_nascimento')
-  expect(response.body).toHaveProperty('endereco')
-  expect(response.body).toHaveProperty('endereco')
+  expect(response.body).toHaveProperty('policial')
+  expect(response.body).toHaveProperty('boletim')
+  expect(response.body).toHaveProperty('veiculo')
+  expect(response.body).toHaveProperty('procurado')
   expect(response.body).toHaveProperty('endereco')
  })
 
- test('GET /cidadaos/:cpf - Não deve ser possível encontrar um cidadão não cadastrado', async () => {
+ test('GET /cidadaos/:cpf - Não deve ser possível encontrar um cidadão sem registro', async () => {
   const citizenFound = await request(app).get('/cidadaos')
-  const cpf = citizenFound.body[0].cpf
-  const response = await request(app).get(`/cidadaos/${cpf}`)
+  const response = await request(app).get(`/cidadaos/${mockedCitizenNotFound.cpf}`)
 
   expect(response.status).toBe(404)
   expect(response.body).not.toBe(citizenFound.body[0])

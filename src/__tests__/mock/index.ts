@@ -7,13 +7,13 @@ export const mockedUUIDs = [
 ];
 
 export const adminPoliceLogin: IPolicialLogin = {
-  cod_registro: '123456789',
+  cod_registro: "123456789",
   senha: "123456",
 };
 
 export const mockedPolice: IPolicialRequest = {
   administrador: false,
-  cod_registro: '987654321',
+  cod_registro: "987654321",
   patente: "Soldado",
   senha: "nklfesf745ds",
 };
@@ -40,3 +40,22 @@ export const mockedPoliceWithoutPassword = {
   cod_registro: 78451245,
   patente: "Capitão",
 };
+
+export const mockedSessions = {
+  cod_registro: '000000001',
+  senha: '1234'
+}
+
+export const mockedSessionsWrongPassword = {
+  cod_registro: '000000001',
+  senha: '12345'
+}
+
+export const mockedSessionsWrongCodeRegister = {
+  cod_registro: '00000000',
+  senha: '12345'
+}
+
+export const mockedCitizenNotFound = {
+  cpf: "12345654321"
+}

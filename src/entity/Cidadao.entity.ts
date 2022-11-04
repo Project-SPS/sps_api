@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn, ManyToOne } from "typeorm";
 import { Endereco } from "./Endereco.entity";
 import { Boletim } from "./Boletim.entity";
 import { Policial } from "./Policial.entity";
 import { Procurado } from "./Procurado.entity";
 import { Veiculo } from "./Veiculo.entity";
+import cidadaosRoutes from "../routes/cidadaos.routes";
 
 @Entity("cidadaos")
 export class Cidadao {
@@ -25,19 +26,18 @@ export class Cidadao {
   @Column({ type: "date" })
   data_nascimento: Date;
 
-  @OneToOne(() => Policial, { eager: true })
+  @OneToOne(() => Policial, (policial) => policial.cidadao, { eager: true })
   policial: Policial;
 
   @OneToMany(() => Boletim, (boletim) => boletim.cidadao, { eager: true })
   boletim: Boletim[];
 
-  @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao, { eager:true })
+  @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao, { eager: true })
   veiculo: Veiculo[];
 
   @OneToMany(() => Procurado, (procurado) => procurado.cidadao, { eager: true })
   procurado: Procurado[];
 
-  @OneToOne(() => Endereco, { eager: true })
-  @JoinColumn()
+  @ManyToOne(() => Endereco, (endereco) => endereco.cidadao, { eager: true })
   endereco: Endereco;
 }

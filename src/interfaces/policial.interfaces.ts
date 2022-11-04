@@ -13,6 +13,7 @@ export interface IPolicialResponse {
   cod_registro: string;
   patente: string;
   administrador: boolean;
+
 }
 
 export interface IPolicialLogin {
