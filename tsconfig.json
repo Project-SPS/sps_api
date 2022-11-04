@@ -4,7 +4,7 @@
     "target": "ES2016",
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "/dist",
+    "outDir": "./dist",
     "typeRoots": ["src/@types", "node_modules/@types"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
