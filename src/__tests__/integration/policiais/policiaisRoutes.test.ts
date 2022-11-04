@@ -158,12 +158,14 @@ describe("/policiais", () => {
     expect(listResponse.body).toHaveProperty("message");
   });
 
-  it("UPDATE /policiais/:id - Deve ser possível o próprio usuário atualizar sua senha.", async () => {
+  it("PATCH /policiais/:id - Deve ser possível o próprio usuário atualizar sua senha.", async () => {
+    const newPassword = "novaSenha123!";
+
     const loginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
     const updateResponse = await request(app)
       .patch(`/policiais/${mockedPolice.cod_registro}`)
       .set("Authorization", `Bearer ${loginResponse.body.token}`)
-      .send({ senha: "novaSenha123!" });
+      .send({ senha: newPassword });
 
     expect(updateResponse.status).toBe(200);
     expect(updateResponse.body).toHaveProperty("id");
@@ -177,5 +179,12 @@ describe("/policiais", () => {
     expect(updateResponse.body).toHaveProperty("cpf");
     expect(updateResponse.body).toHaveProperty("email");
     expect(updateResponse.body).toHaveProperty("data_nascimento");
+
+    nonAdminPoliceLogin.senha = newPassword;
+
+    const newLoginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+
+    expect(newLoginResponse.status).toBe(200);
+    expect(newLoginResponse.body).toHaveProperty("message");
   });
 });
