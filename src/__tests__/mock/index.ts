@@ -7,13 +7,13 @@ export const mockedUUIDs = [
 ];
 
 export const adminPoliceLogin: IPolicialLogin = {
-  cod_registro: 123456789,
+  cod_registro: '123456789',
   senha: "123456",
 };
 
 export const mockedPolice: IPolicialRequest = {
   administrador: false,
-  cod_registro: 987654321,
+  cod_registro: '987654321',
   patente: "Soldado",
   senha: "nklfesf745ds",
 };

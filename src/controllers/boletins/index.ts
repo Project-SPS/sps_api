@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
-import { start } from "repl";
 import { AppError } from "../../errors/AppError";
 import { IBoletimRequest, IBoletimUpdateRequest } from "../../interfaces/boletim.interfaces";
-import createBulletinService from "../../service/boletim/createBulletin.service";
-import updateBulletinService from "../../service/boletim/updateBulletin.service";
-import listBulletinCitizenService from "../../service/boletim/listBulletinCitizen.service";
-import listBulletinVehicleService from "../../service/boletim/listBulletinVehicle.service";
-import listBulletinService from "../../service/boletim/listBulletin.service";
+import createBulletinService from "../../services/boletim/createBulletin.service";
+import listBulletinService from "../../services/boletim/listBulletin.service";
+import listBulletinCitizenService from "../../services/boletim/listBulletinCitizen.service";
+import listBulletinVehicleService from "../../services/boletim/listBulletinVehicle.service";
+import updateBulletinService from "../../services/boletim/updateBulletin.service";
 
 
 const createBulletinController = async (req : Request, res: Response) => {
@@ -18,7 +17,6 @@ const createBulletinController = async (req : Request, res: Response) => {
         if( error instanceof AppError) {
             return res.status(error.statusCode).json({message: error.message})
         }
-        return res.status(401).json({error: error.errors})
     }
 } 
 
@@ -32,7 +30,6 @@ const updateBulletinController = async (req: Request, res: Response) => {
         if( error instanceof AppError) {
             return res.status(error.statusCode).json({message: error.message})
         }
-        return res.status(401).json({error: error.errors})
     }
 }
 
