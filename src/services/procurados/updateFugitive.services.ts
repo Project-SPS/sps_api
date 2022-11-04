@@ -5,8 +5,10 @@ import { AppError } from "../../errors/AppError";
 const updateFugitiveService = async (body: IProcuradosUpdate, cpf: string) => {
   const fugitivesRepository = AppDataSource.getRepository(Procurado);
 
-  const fugitiveExists = fugitivesRepository.findOneBy({
-    id: cpf,
+  const fugitiveExists = fugitivesRepository.find({
+    relations: {
+      cidadao: true,
+    },
   });
 
   if (!fugitiveExists) {
