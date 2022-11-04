@@ -20,4 +20,7 @@ export class Procurado {
 
   @ManyToOne(() => Cidadao)
   cidadao: Cidadao;
+
+  @Column({type: "varchar", length:250, nullable:true})
+  image: string;
 }

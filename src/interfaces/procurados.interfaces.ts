@@ -4,6 +4,7 @@ export interface IProcurados {
   esta_ativo: boolean;
   data_modificacao: Date;
   cidadao_id: string;
+  image?: any
 }
 
 export interface IProcuradosUpdate {
