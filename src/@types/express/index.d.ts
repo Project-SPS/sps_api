@@ -1,4 +1,4 @@
-import * as express from "express"
+import * as express from 'express'
 
 declare global {
     namespace Express {
@@ -6,7 +6,7 @@ declare global {
             user: {
                 id: string;
                 administrador: boolean;
-                cod_registro: number;
+                cod_registro: string;
             }
         }
     }
