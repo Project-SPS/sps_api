@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  OneToMany,
+  JoinColumn,
+  ManyToOne,
+} from "typeorm";
 import { Endereco } from "./Endereco.entity";
 import { Boletim } from "./Boletim.entity";
 import { Policial } from "./Policial.entity";
@@ -25,7 +33,7 @@ export class Cidadao {
   @Column({ type: "date" })
   data_nascimento: Date;
 
-  @OneToOne(() => Policial, { eager: true })
+  @OneToOne(() => Policial)
   policial: Policial;
 
   @OneToMany(() => Boletim, (boletim) => boletim.cidadao, { eager: true })
