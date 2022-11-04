@@ -7,7 +7,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "node dist/src/app.js",
+    "start": "node dist/src/server.js",
     "build": "tsc",
     "dev": "ts-node-dev --experimental-specifier-resolution=node src/server.ts",
     "typeorm": "typeorm-ts-node-commonjs",
