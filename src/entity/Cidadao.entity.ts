@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn, ManyToOne } from "typeorm";
 import { Endereco } from "./Endereco.entity";
 import { Boletim } from "./Boletim.entity";
 import { Policial } from "./Policial.entity";
@@ -31,13 +31,12 @@ export class Cidadao {
   @OneToMany(() => Boletim, (boletim) => boletim.cidadao, { eager: true })
   boletim: Boletim[];
 
-  @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao, { eager:true })
+  @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao, { eager: true })
   veiculo: Veiculo[];
 
   @OneToMany(() => Procurado, (procurado) => procurado.cidadao, { eager: true })
   procurado: Procurado[];
 
-  @OneToOne(() => Endereco, { eager: true })
-  @JoinColumn()
+  @ManyToOne(() => Endereco, (endereco) => endereco.cidadao, { eager: true })
   endereco: Endereco;
 }
