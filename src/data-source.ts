@@ -11,15 +11,11 @@ export const AppDataSource = new DataSource(
       }
     : {
         type: "postgres",
-        host: process.env.HOST,
-        port: 5432,
-        username: process.env.POSTGRES_USER,
-        password: process.env.POSTGRES_PASSWORD,
-        database: "projetom4",
+        url: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false },
         synchronize: false,
         logging: true,
-        entities: ["src/entity/*.ts"],
-        migrations: ["src/migrations/*.ts"],
-        migrationsTransactionMode: "each",
+        entities: ["dist/entity/*.js"],
+        migrations: ["dist/migrations/*.js"],
       }
 );

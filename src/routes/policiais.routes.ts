@@ -4,16 +4,42 @@ import deletePolicialController from "../controllers/policiais/deletePolicial.co
 import listOnePoliciaisController from "../controllers/policiais/listOnePolice.controllers";
 import listPoliciaisController from "../controllers/policiais/listPoliciais.controllers";
 import updatePolicialController from "../controllers/policiais/updatePolicial.controllers";
+import { verifyAuth } from "../middlewares";
+import verifyIsAdmTokenMiddleware from "../middlewares/verifyIsAdmToken.middleware";
 
 const policeRoutes = Router();
 
-policeRoutes.post("", createPolicialController);
-policeRoutes.get("", listPoliciaisController);
+policeRoutes.post(
+  "",
+  verifyAuth,
+  verifyIsAdmTokenMiddleware,
+  createPolicialController
+);
+policeRoutes.get(
+  "",
+  verifyAuth,
+  verifyIsAdmTokenMiddleware,
+  listPoliciaisController
+);
 
-policeRoutes.delete("/:id", deletePolicialController);
-policeRoutes.patch("/:id", updatePolicialController);
+policeRoutes.delete(
+  "/:id",
+  verifyAuth,
+  verifyIsAdmTokenMiddleware,
+  deletePolicialController
+);
+policeRoutes.patch(
+  "/:id",
+  verifyAuth,
+  verifyIsAdmTokenMiddleware,
+  updatePolicialController
+);
 
-policeRoutes.get("/:cod_registro", listOnePoliciaisController);
-
+policeRoutes.get(
+  "/:cod_registro",
+  verifyAuth,
+  verifyIsAdmTokenMiddleware,
+  listOnePoliciaisController
+);
 
 export default policeRoutes;

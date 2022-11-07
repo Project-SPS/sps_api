@@ -1,53 +1,30 @@
 import { Request, Response } from "express";
 import { start } from "repl";
 import { AppError } from "../../errors/AppError";
-import {
-  IBoletimRequest,
-  IBoletimUpdateRequest,
-} from "../../interfaces/boletim.interfaces";
-import createBulletinService from "../../service/boletim/createBulletin.service";
-import updateBulletinService from "../../service/boletim/updateBulletin.service";
-import listBulletinCitizenService from "../../service/boletim/listBulletinCitizen.service";
-import listBulletinVehicleService from "../../service/boletim/listBulletinVehicle.service";
-import listBulletinService from "../../service/boletim/listBulletin.service";
+import { IBoletimRequest, IBoletimUpdateRequest } from "../../interfaces/boletim.interfaces";
+import createBulletinService from "../../services/boletim/createBulletin.services";
+import updateBulletinService from "../../services/boletim/updateBulletin.services";
+import listBulletinCitizenService from "../../services/boletim/listBulletinCitizen.services";
+import listBulletinVehicleService from "../../services/boletim/listBulletinVehicle.services";
+import listBulletinService from "../../services/boletim/listBulletin.services";
 
 const createBulletinController = async (req: Request, res: Response) => {
-  try {
-    const data: IBoletimRequest = req.body;
-    const create = await createBulletinService(data);
-    return res.status(201).json(create);
-  } catch (error) {
-    if (error instanceof AppError) {
-      return res.status(error.statusCode).json({ message: error.message });
-    }
-    return res.status(401).json({ error: error.errors });
-  }
+  const data: IBoletimRequest = req.body;
+  const create = await createBulletinService(data);
+  return res.status(201).json(create);
 };
 
 const updateBulletinController = async (req: Request, res: Response) => {
-  try {
-    const id: string = req.params.id;
-    const data: IBoletimUpdateRequest = req.body;
-    const update = await updateBulletinService(data, id);
-    return res.status(201).json(update);
-  } catch (error) {
-    if (error instanceof AppError) {
-      return res.status(error.statusCode).json({ message: error.message });
-    }
-    return res.status(401).json({ error: error.errors });
-  }
+  const id: string = req.params.id;
+  const data: IBoletimUpdateRequest = req.body;
+  const update = await updateBulletinService(data, id);
+  return res.status(201).json(update);
 };
 
 const listBulletinCitizenController = async (req: Request, res: Response) => {
-  try {
-    const cpf: string = req.params.cpf;
-    const list = await listBulletinCitizenService(cpf);
-    return res.status(200).json(list);
-  } catch (error) {
-    if (error instanceof AppError) {
-      return res.status(error.statusCode).json({ message: error.message });
-    }
-  }
+  const cpf: string = req.params.cpf;
+  const list = await listBulletinCitizenService(cpf);
+  return res.status(200).json(list);
 };
 
 const listBulletinVehicleController = async (req: Request, res: Response) => {
@@ -63,15 +40,9 @@ const listBulletinVehicleController = async (req: Request, res: Response) => {
 };
 
 const listBulletinController = async (req: Request, res: Response) => {
-  try {
-    const id: string = req.params.id;
-    const bulletin = await listBulletinService(id);
-    return res.status(201).json(bulletin);
-  } catch (error) {
-    if (error instanceof AppError) {
-      return res.status(error.statusCode).json({ message: error.message });
-    }
-  }
+  const id: string = req.params.id;
+  const bulletin = await listBulletinService(id);
+  return res.status(201).json(bulletin);
 };
 
 export {
