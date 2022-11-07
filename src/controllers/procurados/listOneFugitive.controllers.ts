@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import listOneFugitiveService from "../../services/produrados/listOneFugitive.services";
+import listOneFugitiveService from "../../services/procurados/listOneFugitive.services";
 
 const listOneFugitiveController = async (req: Request, res: Response) => {
   const { cpf } = req.params;

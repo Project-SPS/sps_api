@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import listOneTrafficTicketService from "../../services/trafficTicket/listOneTrafficTicket.service";
+import listOneTrafficTicketService from "../../services/trafficTicket/listOneTrafficTicket.services";
 const listOneTrafficTicketController = async (req: Request, res: Response) => {
   const { id } = req.params;
 

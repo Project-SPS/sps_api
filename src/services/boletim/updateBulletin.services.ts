@@ -4,7 +4,10 @@ import { AppDataSource } from "../../data-source";
 import { updateBulletinSerializer } from "../../serializer/boletim.serializer";
 import { IBoletimUpdateRequest } from "../../interfaces/boletim.interfaces";
 
-const updateBulletinService = async (data: IBoletimUpdateRequest, id: string): Promise<Boletim> => {
+const updateBulletinService = async (
+  data: IBoletimUpdateRequest,
+  id: string
+): Promise<Boletim> => {
   const updateSerializer = await updateBulletinSerializer.validate(data);
   const boletimRepository = AppDataSource.getRepository(Boletim);
   const findBoletim = await boletimRepository.findOneBy({ id });
@@ -13,7 +16,7 @@ const updateBulletinService = async (data: IBoletimUpdateRequest, id: string): P
   }
   await boletimRepository.update(id, { finalizado: data.finalizado });
   const boletim = await boletimRepository.findOneBy({ id });
-  return boletim as Boletim;
+  return boletim!;
 };
 
 export default updateBulletinService;

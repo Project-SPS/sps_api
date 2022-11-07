@@ -12,7 +12,7 @@ const createFugitiveServices = async (fugitive: IProcurados) => {
   });
 
   if (!getCitiezen) {
-    throw new AppError("Citizen not found", 404);
+    throw new AppError("Cidadão não encontrado", 404);
   }
 
   const newFugitive = new Procurado();

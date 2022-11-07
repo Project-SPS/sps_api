@@ -5,12 +5,21 @@ import {
   listVehicleFinesController,
   retrieveVehicleController,
 } from "../controllers/veiculos";
+import { verifyAuth } from "../middlewares";
 
 const veiculosRoutes = Router();
 
-veiculosRoutes.get("/:identifier", retrieveVehicleController);
-veiculosRoutes.get("/cidadao/:cpf", listCitizenVehiclesController);
-veiculosRoutes.get("/multas/:identifier", listVehicleFinesController);
-veiculosRoutes.post("/multas/:identifier", createVehicleFineController);
+veiculosRoutes.get("/:identifier", verifyAuth, retrieveVehicleController);
+veiculosRoutes.get("/cidadao/:cpf", verifyAuth, listCitizenVehiclesController);
+veiculosRoutes.get(
+  "/multas/:identifier",
+  verifyAuth,
+  listVehicleFinesController
+);
+veiculosRoutes.post(
+  "/multas/:identifier",
+  verifyAuth,
+  createVehicleFineController
+);
 
 export default veiculosRoutes;

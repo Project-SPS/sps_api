@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import listTrafficTicketService from "../../services/trafficTicket/listTrafficTicket.service";
+import listTrafficTicketService from "../../services/trafficTicket/listTrafficTicket.services";
 
 const listTrafficTicketController = async (req: Request, res: Response) => {
   const trafficTickets = await listTrafficTicketService();
