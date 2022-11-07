@@ -6,6 +6,7 @@ export interface IProcurados {
   policialId: string;
   veiculoId?: string;
   cidadaoId: string;
+  image?: any;
 }
 
 export interface IProcuradosUpdate {
