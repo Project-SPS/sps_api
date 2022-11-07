@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany, JoinColumn, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  OneToMany,
+  JoinColumn,
+  ManyToOne,
+} from "typeorm";
 import { Endereco } from "./Endereco.entity";
 import { Boletim } from "./Boletim.entity";
 import { Policial } from "./Policial.entity";

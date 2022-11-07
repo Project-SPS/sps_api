@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Multa } from "./Multa.entity";
 import { Veiculo } from "./Veiculo.entity";
 
@@ -7,7 +13,7 @@ export class VeiculoMulta {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ type: "date" })
+  @CreateDateColumn()
   data: Date;
 
   @Column({ type: "boolean", default: true })

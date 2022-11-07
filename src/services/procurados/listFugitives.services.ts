@@ -4,7 +4,7 @@ import { Procurado } from "../../entity/Procurado.entity";
 const listFugitivesServices = async () => {
   const fugitivesRepository = AppDataSource.getRepository(Procurado);
 
-  const fugitives = fugitivesRepository.find();
+  const fugitives = fugitivesRepository.find({ relations: { cidadao: true } });
 
   return fugitives;
 };

@@ -4,10 +4,10 @@ import {
   ICreateVehicleFineRequest,
   IVehicleRequest,
 } from "../../interfaces/veiculo.interfaces";
-import createVehicleFineService from "../../services/veiculos/createVehicleFine.service";
-import listCitizenVehiclesService from "../../services/veiculos/listCitizenVehicles.service";
-import listVehicleFinesService from "../../services/veiculos/listVehicleFines.service";
-import retrieveVehicleService from "../../services/veiculos/retrieveVehicle.service";
+import createVehicleFineService from "../../services/veiculos/createVehicleFine.services";
+import listCitizenVehiclesService from "../../services/veiculos/listCitizenVehicles.services";
+import listVehicleFinesService from "../../services/veiculos/listVehicleFines.services";
+import retrieveVehicleService from "../../services/veiculos/retrieveVehicle.services";
 
 const retrieveVehicleController = async (req: Request, res: Response) => {
   const { identifier } = req.params;

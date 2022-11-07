@@ -1,13 +1,18 @@
 import { Router } from "express";
-import { createBulletinController, listBulletinCitizenController, listBulletinController, listBulletinVehicleController, updateBulletinController } from "../controllers/boletins";
+import {
+  createBulletinController,
+  listBulletinCitizenController,
+  listBulletinController,
+  listBulletinVehicleController,
+  updateBulletinController,
+} from "../controllers/boletins";
+import { verifyAuth } from "../middlewares";
 
 const boletimRouter = Router();
-boletimRouter.post("", createBulletinController); //criação de boletim 
-boletimRouter.patch("/:id", updateBulletinController); // update do status do boletim 
-boletimRouter.get("/cidadao/:cpf", listBulletinCitizenController) // lista os boletins por cpf 
-boletimRouter.get("/veiculo/:placa", listBulletinVehicleController) // lista os boletins por placa de um veiculo 
-boletimRouter.get('/:id',listBulletinController) // lista o respectivo boletim por id 
+boletimRouter.post("", verifyAuth, createBulletinController); //criação de boletim
+boletimRouter.patch("/:id", verifyAuth, updateBulletinController); // update do status do boletim
+boletimRouter.get("/cidadao/:cpf", verifyAuth, listBulletinCitizenController); // lista os boletins por cpf
+boletimRouter.get("/veiculo/:placa", verifyAuth, listBulletinVehicleController); // lista os boletins por placa de um veiculo
+boletimRouter.get("/:id", verifyAuth, listBulletinController); // lista o respectivo boletim por id
 
-
-
-export default boletimRouter
+export default boletimRouter;

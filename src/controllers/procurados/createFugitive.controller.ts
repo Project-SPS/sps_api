@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import createFugitiveServices from "../../services/produrados/createFugitive.services";
+import createFugitiveServices from "../../services/procurados/createFugitive.services";
 
 const createFugitiveController = async (req: Request, res: Response) => {
   const fugitive = req.body;

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { instanceToPlain } from "class-transformer";
-import updateFugitiveService from "../../services/produrados/updateFugitive.services";
+//import { instanceToPlain } from "class-transformer";
+import updateFugitiveService from "../../services/procurados/updateFugitive.services";
 
 const updateFugitiveController = async (req: Request, res: Response) => {
   const body = req.body;
@@ -8,7 +8,7 @@ const updateFugitiveController = async (req: Request, res: Response) => {
 
   const fugitive = await updateFugitiveService(body, cpf);
 
-  return res
-    .status(200)
-    .json({ message: "Procurado atualizado!", ...instanceToPlain(fugitive) });
+  return res.status(200).json(fugitive);
 };
+
+export default updateFugitiveController;

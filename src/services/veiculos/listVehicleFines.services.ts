@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source";
 import { VeiculoMulta } from "../../entity/VeiculoMulta.entity";
 import { Multa } from "../../entity/Multa.entity";
-import retrieveVehicleService from "./retrieveVehicle.service";
+import retrieveVehicleService from "./retrieveVehicle.services";
 import { IVehicleRequest } from "../../interfaces/veiculo.interfaces";
 
 const listVehicleFinesService = async (
