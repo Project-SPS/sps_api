@@ -3,13 +3,13 @@ import createFugitiveController from "../controllers/procurados/createFugitive.c
 import listFugitivesController from "../controllers/procurados/listFugitives.controllers";
 import listOneFugitiveController from "../controllers/procurados/listOneFugitive.controllers";
 import updateFugitiveController from "../controllers/procurados/updateFugitive.controllers";
-import { verifyAuth } from "../middlewares";
+import { verifyAuth, verifySerialization } from "../middlewares";
 
 const procuradosRoutes = Router();
 
 procuradosRoutes.get("", verifyAuth, listFugitivesController);
-procuradosRoutes.get("/:id", verifyAuth, listOneFugitiveController);
+procuradosRoutes.get("/:cpf", verifyAuth, listOneFugitiveController);
 procuradosRoutes.post("", verifyAuth, createFugitiveController);
-procuradosRoutes.patch("/:id", verifyAuth, updateFugitiveController);
+procuradosRoutes.patch("/:cpf", verifyAuth, updateFugitiveController);
 
 export default procuradosRoutes;

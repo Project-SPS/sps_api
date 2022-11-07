@@ -8,7 +8,7 @@ const createFugitiveServices = async (fugitive: IProcurados) => {
   const citiziensRepository = AppDataSource.getRepository(Cidadao);
 
   const getCitiezen = await citiziensRepository.findOneBy({
-    id: fugitive.cidadao_id,
+    id: fugitive.cidadaoId,
   });
 
   if (!getCitiezen) {
@@ -18,13 +18,16 @@ const createFugitiveServices = async (fugitive: IProcurados) => {
   const newFugitive = new Procurado();
 
   newFugitive.descricao = fugitive.descricao;
-  newFugitive.esta_ativo = fugitive.esta_ativo;
+  if (fugitive.esta_ativo) {
+    newFugitive.esta_ativo = fugitive.esta_ativo;
+  }
+  newFugitive.cidadao = getCitiezen;
 
   fugitivesRepository.create(newFugitive);
 
   await fugitivesRepository.save(newFugitive);
 
-  return fugitive;
+  return newFugitive;
 };
 
 export default createFugitiveServices;
