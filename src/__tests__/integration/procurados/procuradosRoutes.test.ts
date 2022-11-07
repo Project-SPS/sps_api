@@ -49,5 +49,60 @@ describe("/policiais", () => {
     expect(wantedResponse.body).toHaveProperty("cidadao");
   });
 
-  it("GET /procurados - Deve", async () => {});
+  it("GET /procurados - Deve ser possível encontrar todos os procurados", async () => {
+    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const wantedResponse = await request(app).get("/procurados").set("Authorization", `Bearer ${adminLoginResponse.body.token}`).send();
+
+    expect(wantedResponse.status).toBe(200);
+    expect(wantedResponse.body[0]).toHaveProperty("id");
+    expect(wantedResponse.body[0]).toHaveProperty("descricao");
+    expect(wantedResponse.body[0]).toHaveProperty("data_criacao");
+    expect(wantedResponse.body[0]).toHaveProperty("data_modificacao");
+    expect(wantedResponse.body[0]).toHaveProperty("ativo");
+    expect(wantedResponse.body[0]).toHaveProperty("cidadao");
+  });
+
+  it("GET /procurados/:cpf - Deve ser possível encontrar um procurado pelo CPF", async () => {
+    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const wantedResponse = await request(app)
+      .get("/procurados/56442351201")
+      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+      .send();
+
+    expect(wantedResponse.status).toBe(200);
+    expect(wantedResponse.body).toHaveProperty("id");
+    expect(wantedResponse.body).toHaveProperty("descricao");
+    expect(wantedResponse.body).toHaveProperty("data_criacao");
+    expect(wantedResponse.body).toHaveProperty("data_modificacao");
+    expect(wantedResponse.body).toHaveProperty("ativo");
+    expect(wantedResponse.body).toHaveProperty("cidadao");
+  });
+
+  it("PATCH /procurados/:cpf - Deve ser possível o status do procurado por CPF", async () => {
+    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const wantedResponse = await request(app)
+      .patch("/procurados/56442351201")
+      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+      .send({ ativo: false });
+
+    expect(wantedResponse.status).toBe(200);
+    expect(wantedResponse.body).toHaveProperty("id");
+    expect(wantedResponse.body).toHaveProperty("descricao");
+    expect(wantedResponse.body).toHaveProperty("data_criacao");
+    expect(wantedResponse.body).toHaveProperty("data_modificacao");
+    expect(wantedResponse.body).toHaveProperty("ativo");
+    expect(wantedResponse.body.ativo).toBe(false);
+    expect(wantedResponse.body).toHaveProperty("cidadao");
+  });
+
+  it("PATCH /procurados/:cpf - Não deve ser possível atualizar a descrição de um procurado", async () => {
+    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const wantedResponse = await request(app)
+      .patch("/procurados/56442351201")
+      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+      .send({ descricao: "ghostface" });
+
+    expect(wantedResponse.status).toBe(400);
+    expect(wantedResponse.body).toHaveProperty("message");
+  });
 });
