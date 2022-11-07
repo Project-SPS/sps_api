@@ -2,7 +2,7 @@ import { AppDataSource } from '../../../data-source'
 import { DataSource } from 'typeorm'
 import request from 'supertest'
 import app from '../../../app'
-import { mockedCitizenNotFound } from '../../mock';
+import { mockedCitizenNotFound, mockedSessions } from '../../mock';
 
 
 describe('Testes para a rota /cidadaos', () => {
@@ -59,15 +59,25 @@ describe('Testes para a rota /cidadaos', () => {
  })
 
  test('GET /cidadaos - É possível listar todos os cidadãos', async () => {
-  const response = await request(app).get('/cidadaos')
+  const login = await request(app).post("/sessions").send(mockedSessions);
+  const response = await request(app)
+      .get("/cidadaos")
+      .set("Authorization", `Bearer ${login.body.token}`);
 
+  console.log("token 1", login.body)
+  
   expect(response.status).toBe(200)
  })
 
  test('GET /cidadaos/:cpf - É possível encontrar o cidadão pelo cpf', async () => {
+  const login = await request(app).post("/sessions").send(mockedSessions);
   const citizenFound = await request(app).get('/cidadaos')
   const cpf = citizenFound.body[0].cpf
-  const response = await request(app).get(`/cidadaos/${cpf}`)
+  const response = await request(app)
+      .get(`/cidadaos/${cpf}`)
+      .set("Authorization", `Bearer ${login.body.token}`);
+
+  console.log("token 2", login.body)
 
   expect(response.status).toBe(200)
   expect(response.body).toHaveProperty('id')
@@ -84,9 +94,14 @@ describe('Testes para a rota /cidadaos', () => {
  })
 
  test('GET /cidadaos/:cpf - Não deve ser possível encontrar um cidadão sem registro', async () => {
+  const login = await request(app).post("/sessions").send(mockedSessions);
   const citizenFound = await request(app).get('/cidadaos')
-  const response = await request(app).get(`/cidadaos/${mockedCitizenNotFound.cpf}`)
+  const response = await request(app)
+      .get(`/cidadaos/${mockedCitizenNotFound.cpf}`)
+      .set("Authorization", `Bearer ${login.body.token}`);
 
+  console.log("token 3", login.body)
+  
   expect(response.status).toBe(404)
   expect(response.body).not.toBe(citizenFound.body[0])
   expect(response.body).toHaveProperty('message')
