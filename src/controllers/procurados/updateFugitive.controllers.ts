@@ -11,4 +11,4 @@ const updateFugitiveController = async (req: Request, res: Response) => {
   return res.status(200).json({ message: "Procurado atualizado!", fugitive });
 };
 
-export default updateFugitiveController
+export default updateFugitiveController;

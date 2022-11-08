@@ -33,18 +33,20 @@ export class Cidadao {
   @Column({ type: "date" })
   data_nascimento: Date;
 
-  @OneToOne(() => Policial)
+  @OneToOne(() => Policial, (policial) => policial.cidadao)
   policial: Policial;
 
-  @OneToMany(() => Boletim, (boletim) => boletim.cidadao, { eager: true })
+  @OneToMany(() => Boletim, (boletim) => boletim.cidadao, { eager: false })
   boletim: Boletim[];
 
-  @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao, { eager: true })
+  @OneToMany(() => Veiculo, (veiculo) => veiculo.cidadao, { eager: false })
   veiculo: Veiculo[];
 
-  @OneToMany(() => Procurado, (procurado) => procurado.cidadao, { eager: true })
+  @OneToMany(() => Procurado, (procurado) => procurado.cidadao, {
+    eager: false,
+  })
   procurado: Procurado[];
 
-  @ManyToOne(() => Endereco, (endereco) => endereco.cidadao, { eager: true })
+  @ManyToOne(() => Endereco, (endereco) => endereco.cidadao, { eager: false })
   endereco: Endereco;
 }

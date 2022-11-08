@@ -37,7 +37,7 @@ export class Policial {
   @UpdateDateColumn({ type: "date" })
   data_atualizacao: Date;
 
-  @OneToOne(() => Cidadao)
+  @OneToOne(() => Cidadao, (cidadao) => cidadao.policial)
   @JoinColumn()
   cidadao: Cidadao;
 
