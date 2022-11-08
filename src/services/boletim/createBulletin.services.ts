@@ -4,27 +4,37 @@ import { AppError } from "../../errors/AppError";
 import { Policial } from "../../entity/Policial.entity";
 import { Veiculo } from "../../entity/Veiculo.entity";
 import { Cidadao } from "../../entity/Cidadao.entity";
-import { IBoletimRequest } from "../../interfaces/boletim.interfaces";
-import { createBulletinSerializer } from "../../serializers/boletim.serializer";
+import {
+  IBoletimRequest,
+  IBoletimResponse,
+} from "../../interfaces/boletim.interfaces";
 
-const createBulletinService = async (data: IBoletimRequest): Promise<Boletim> => {
+const createBulletinService = async (
+  data: IBoletimRequest
+): Promise<IBoletimResponse> => {
   const cidadaoRepository = AppDataSource.getRepository(Cidadao);
   const veiculoRepository = AppDataSource.getRepository(Veiculo);
   const policialRepository = AppDataSource.getRepository(Policial);
   const boletimRepository = AppDataSource.getRepository(Boletim);
 
-  const findCidadao = await cidadaoRepository.findOneBy({ id: data.cidadao_id });
+  const findCidadao = await cidadaoRepository.findOneBy({
+    id: data.cidadao_id,
+  });
   if (!findCidadao) {
     throw new AppError("Cidadão não existe", 401);
   }
-  const findPolicial = await policialRepository.findOneBy({ id: data.policial_id });
+  const findPolicial = await policialRepository.findOneBy({
+    id: data.policial_id,
+  });
   if (!findPolicial) {
-    throw new AppError("Policial não existe", 401);
+    throw new AppError("Policial não existe", 404);
   }
   if (data.veiculo_id) {
-    const findVeiculo = await veiculoRepository.findOneBy({ id: data.veiculo_id });
+    const findVeiculo = await veiculoRepository.findOneBy({
+      id: data.veiculo_id,
+    });
     if (!findVeiculo) {
-      throw new AppError("Veículo não exite", 401);
+      throw new AppError("Veículo não existe", 404);
     }
     const createBulletin = boletimRepository.create({
       descricao: data.descricao,
@@ -33,11 +43,17 @@ const createBulletinService = async (data: IBoletimRequest): Promise<Boletim> =>
       veiculo: findVeiculo,
     });
     await boletimRepository.save(createBulletin);
-    return createBulletin;
+    const { policial, ...createBulletinRest } = createBulletin;
+    return createBulletinRest;
   }
-  const createBulletin = boletimRepository.create({ descricao: data.descricao, policial: findPolicial, cidadao: findCidadao });
+  const createBulletin = boletimRepository.create({
+    descricao: data.descricao,
+    policial: findPolicial,
+    cidadao: findCidadao,
+  });
   await boletimRepository.save(createBulletin);
-  return createBulletin;
+  const { policial, ...createBulletinRest } = createBulletin;
+  return createBulletinRest;
 };
 
 export default createBulletinService;
