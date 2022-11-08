@@ -12,6 +12,7 @@ import { Boletim } from "./Boletim.entity";
 import { Policial } from "./Policial.entity";
 import { Procurado } from "./Procurado.entity";
 import { Veiculo } from "./Veiculo.entity";
+import cidadaosRoutes from "../routes/cidadaos.routes";
 
 @Entity("cidadaos")
 export class Cidadao {
@@ -33,7 +34,7 @@ export class Cidadao {
   @Column({ type: "date" })
   data_nascimento: Date;
 
-  @OneToOne(() => Policial)
+  @OneToOne(() => Policial, (policial) => policial.cidadao, { eager: true })
   policial: Policial;
 
   @OneToMany(() => Boletim, (boletim) => boletim.cidadao, { eager: true })

@@ -30,7 +30,7 @@ const listBulletinVehicleController = async (req: Request, res: Response) => {
   try {
     const placa: string = req.params.placa;
     const list = await listBulletinVehicleService(placa);
-    return res.status(201).json(list);
+    return res.status(200).json(list);
   } catch (error) {
     if (error instanceof AppError) {
       return res.status(error.statusCode).json({ message: error.message });
@@ -41,7 +41,7 @@ const listBulletinVehicleController = async (req: Request, res: Response) => {
 const listBulletinController = async (req: Request, res: Response) => {
   const id: string = req.params.id;
   const bulletin = await listBulletinService(id);
-  return res.status(201).json(bulletin);
+  return res.status(200).json(bulletin);
 };
 
 export {
