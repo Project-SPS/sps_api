@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
-import { start } from "repl";
 import { AppError } from "../../errors/AppError";
-import {
-  IBoletimRequest,
-  IBoletimUpdateRequest,
-} from "../../interfaces/boletim.interfaces";
+import { IBoletimRequest, IBoletimUpdateRequest } from "../../interfaces/boletim.interfaces";
 import createBulletinService from "../../services/boletim/createBulletin.services";
 import updateBulletinService from "../../services/boletim/updateBulletin.services";
 import listBulletinCitizenService from "../../services/boletim/listBulletinCitizen.services";

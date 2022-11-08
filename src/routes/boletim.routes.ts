@@ -6,11 +6,12 @@ import {
   listBulletinVehicleController,
   updateBulletinController,
 } from "../controllers/boletins";
-import { verifyAuth } from "../middlewares";
+import { verifyAuth, verifySerialization } from "../middlewares";
+import { createBulletinSerializer, updateBulletinSerializer } from "../serializers";
 
 const boletimRouter = Router();
-boletimRouter.post("", verifyAuth, createBulletinController); //criação de boletim
-boletimRouter.patch("/:id", verifyAuth, updateBulletinController); // update do status do boletim
+boletimRouter.post("", verifySerialization(createBulletinSerializer), verifyAuth, createBulletinController); //criação de boletim
+boletimRouter.patch("/:id", verifySerialization(updateBulletinSerializer), verifyAuth, updateBulletinController); // update do status do boletim
 boletimRouter.get("/cidadao/:cpf", verifyAuth, listBulletinCitizenController); // lista os boletins por cpf
 boletimRouter.get("/veiculo/:placa", verifyAuth, listBulletinVehicleController); // lista os boletins por placa de um veiculo
 boletimRouter.get("/:id", verifyAuth, listBulletinController); // lista o respectivo boletim por id

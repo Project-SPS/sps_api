@@ -4,7 +4,6 @@ import {
   Column,
   OneToOne,
   OneToMany,
-  JoinColumn,
   ManyToOne,
 } from "typeorm";
 import { Endereco } from "./Endereco.entity";

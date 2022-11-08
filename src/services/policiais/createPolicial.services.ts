@@ -10,7 +10,7 @@ const createPolicialService = async ({cod_registro, patente, senha, administrado
 
     const cod_registerExist = await policeRepository.findOneBy({cod_registro});
 
-    if(cod_registerExist) {
+    if (cod_registerExist) {
         throw new AppError("This cod is already being used", 400);
     }
 

@@ -16,7 +16,7 @@ export class Policial {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ type: "varchar", unique: true })
+  @Column({ type: "varchar", length: 9, unique: true })
   cod_registro: string;
 
   @Column({ type: "varchar", length: 120 })

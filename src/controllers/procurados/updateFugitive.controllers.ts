@@ -8,7 +8,7 @@ const updateFugitiveController = async (req: Request, res: Response) => {
 
   const fugitive = await updateFugitiveService(body, cpf);
 
-  return res.status(200).json({ message: "Procurado atualizado!", fugitive });
+  return res.status(200).json(fugitive);
 };
 
 export default updateFugitiveController;

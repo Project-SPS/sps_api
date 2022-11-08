@@ -4,14 +4,14 @@ import { AppError } from "../../errors/AppError";
 import { Policial } from "../../entity/Policial.entity";
 import { Veiculo } from "../../entity/Veiculo.entity";
 import { Cidadao } from "../../entity/Cidadao.entity";
-import { IBoletimRequest } from "../../interfaces/boletim.interfaces";
-import { createBulletinSerializer } from "../../serializer/boletim.serializer";
+import {
+  IBoletimRequest,
+  IBoletimResponse,
+} from "../../interfaces/boletim.interfaces";
 
-const createBulletinService = async (data: IBoletimRequest): Promise<any> => {
-  const serializerBulletim = await createBulletinSerializer.validate(data, {
-    stripUnknown: true,
-    abortEarly: false,
-  });
+const createBulletinService = async (
+  data: IBoletimRequest
+): Promise<IBoletimResponse> => {
   const cidadaoRepository = AppDataSource.getRepository(Cidadao);
   const veiculoRepository = AppDataSource.getRepository(Veiculo);
   const policialRepository = AppDataSource.getRepository(Policial);

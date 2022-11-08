@@ -1,9 +1,12 @@
 export interface IProcurados {
   descricao: string;
-  data_criacao: Date;
-  esta_ativo: boolean;
-  data_modificacao: Date;
-  cidadao_id: string;
+  esta_ativo?: boolean;
+  data_criacao?: Date;
+  data_modificacao?: Date;
+  policialId: string;
+  veiculoId?: string;
+  cidadaoId: string;
+  image?: any;
 }
 
 export interface IProcuradosUpdate {

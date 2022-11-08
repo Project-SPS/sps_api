@@ -3,8 +3,8 @@ import createFugitiveServices from "../../services/procurados/createFugitive.ser
 
 const createFugitiveController = async (req: Request, res: Response) => {
   const fugitive = req.body;
-
-  const newFugitive = await createFugitiveServices(fugitive);
+  const image = req.file;
+  const newFugitive = await createFugitiveServices(fugitive,image);
 
   return res.status(201).send(newFugitive);
 };
