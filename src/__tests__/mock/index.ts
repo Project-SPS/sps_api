@@ -42,6 +42,24 @@ export const mockedPoliceWithoutPassword = {
   patente: "Capitão",
 };
 
+export const mockedSessions = {
+  cod_registro: '000000001',
+  senha: '1234'
+}
+
+export const mockedSessionsWrongPassword = {
+  cod_registro: '000000001',
+  senha: '12345'
+}
+
+export const mockedSessionsWrongCodeRegister = {
+  cod_registro: '00000000',
+  senha: '12345'
+}
+
+export const mockedCitizenNotFound = {
+  cpf: "12345654321"
+}
 export const mockedWantedCititzen: IProcurados = {
   cidadaoId: mockedUUIDs[0],
   descricao: "Procurado pela justiça.",
