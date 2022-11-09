@@ -17,7 +17,7 @@ export const mockedPolice: IPolicialRequest = {
   cod_registro: "987654321",
   patente: "Soldado",
   senha: "nklfesf745ds",
-  cidadaoId: mockedUUIDs[0],
+  cidadaoId: mockedUUIDs[1],
 };
 
 export const nonAdminPoliceLogin: IPolicialLogin = {

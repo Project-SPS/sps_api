@@ -59,11 +59,7 @@ describe("/policiais", () => {
     expect(registerResponse.body).toHaveProperty("data_criacao");
     expect(registerResponse.body).toHaveProperty("data_atualizacao");
     expect(registerResponse.body).toHaveProperty("ativo");
-    expect(registerResponse.body).toHaveProperty("nome");
-    expect(registerResponse.body).toHaveProperty("idade");
-    expect(registerResponse.body).toHaveProperty("cpf");
-    expect(registerResponse.body).toHaveProperty("email");
-    expect(registerResponse.body).toHaveProperty("data_nascimento");
+    expect(registerResponse.body).toHaveProperty("cidadao");
   });
 
   it("POST /policiais - Não deve ser possível criar um policial não sendo administrador", async () => {
@@ -145,7 +141,14 @@ describe("/policiais", () => {
       .send();
 
     expect(listResponse.status).toBe(200);
-    expect(listResponse.body).toHaveLength(1);
+    expect(listResponse.body).toHaveProperty("id");
+    expect(listResponse.body).toHaveProperty("cod_registro");
+    expect(listResponse.body).toHaveProperty("patente");
+    expect(listResponse.body).toHaveProperty("administrador");
+    expect(listResponse.body).toHaveProperty("data_criacao");
+    expect(listResponse.body).toHaveProperty("data_atualizacao");
+    expect(listResponse.body).toHaveProperty("ativo");
+    expect(listResponse.body).toHaveProperty("cidadao");
   });
 
   it("GET /policiais/:cod_registro - Não deve ser possível listar um policial por código de registro sem ser administrador", async () => {
@@ -172,14 +175,11 @@ describe("/policiais", () => {
     expect(updateResponse.body).toHaveProperty("id");
     expect(updateResponse.body).toHaveProperty("cod_registro");
     expect(updateResponse.body).toHaveProperty("patente");
+    expect(updateResponse.body).not.toHaveProperty("senha");
     expect(updateResponse.body).toHaveProperty("administrador");
     expect(updateResponse.body).toHaveProperty("data_criacao");
     expect(updateResponse.body).toHaveProperty("data_atualizacao");
-    expect(updateResponse.body).toHaveProperty("nome");
-    expect(updateResponse.body).toHaveProperty("idade");
-    expect(updateResponse.body).toHaveProperty("cpf");
-    expect(updateResponse.body).toHaveProperty("email");
-    expect(updateResponse.body).toHaveProperty("data_nascimento");
+    expect(updateResponse.body).toHaveProperty("cidadao");
 
     nonAdminPoliceLogin.senha = newPassword;
 
@@ -217,17 +217,13 @@ describe("/policiais", () => {
     expect(updateResponse.body).toHaveProperty("id");
     expect(updateResponse.body).toHaveProperty("cod_registro");
     expect(updateResponse.body).toHaveProperty("patente");
+    expect(updateResponse.body).not.toHaveProperty("senha");
     expect(updateResponse.body.patente).toEqual(updateData.patente);
     expect(updateResponse.body).toHaveProperty("administrador");
     expect(updateResponse.body.administrador).toEqual(updateData.administrador);
     expect(updateResponse.body).toHaveProperty("data_criacao");
     expect(updateResponse.body).toHaveProperty("data_atualizacao");
-    expect(updateResponse.body).toHaveProperty("nome");
-    expect(updateResponse.body).toHaveProperty("ativo");
-    expect(updateResponse.body).toHaveProperty("idade");
-    expect(updateResponse.body).toHaveProperty("cpf");
-    expect(updateResponse.body).toHaveProperty("email");
-    expect(updateResponse.body).toHaveProperty("data_nascimento");
+    expect(updateResponse.body).toHaveProperty("cidadao");
 
     nonAdminPoliceLogin.senha = updateData.senha;
 
@@ -235,6 +231,23 @@ describe("/policiais", () => {
 
     expect(newLoginResponse.status).toBe(200);
     expect(newLoginResponse.body).toHaveProperty("token");
+  });
+
+  it("DELELE /policiais/:cod_registro - Não deve ser possível realizar o soft delete sem ser administrador.", async () => {
+    const loginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
+    await request(app)
+      .patch(`/policiais/${nonAdminPoliceLogin.cod_registro}`)
+      .set("Authorization", `Bearer ${loginResponse.body.token}`)
+      .send({ administrador: false });
+
+    const nonAdminloginResponse = await request(app).post("/sessions").send(nonAdminPoliceLogin);
+    const deleteResponse = await request(app)
+      .delete(`/policiais/${mockedPolice.cod_registro}`)
+      .set("Authorization", `Bearer ${nonAdminloginResponse.body.token}`)
+      .send();
+
+    expect(deleteResponse.status).toBe(403);
+    expect(deleteResponse.body).toHaveProperty("message");
   });
 
   it("DELETE /policiais/:cod_registro - Deve ser possível realizar o soft delete", async () => {
@@ -245,16 +258,5 @@ describe("/policiais", () => {
       .send();
 
     expect(deleteResponse.status).toBe(204);
-  });
-
-  it("DELELE /policiais/:cod_registro - Não deve ser possível realizar o soft delete sem ser administrador.", async () => {
-    const loginResponse = await request(app).post("/sessions").send(nonAdminPoliceLogin);
-    const deleteResponse = await request(app)
-      .delete(`/policiais/${mockedPolice.cod_registro}`)
-      .set("Authorization", `Bearer ${loginResponse.body.token}`)
-      .send();
-
-    expect(deleteResponse.status).toBe(403);
-    expect(deleteResponse.body).toHaveProperty("message");
   });
 });

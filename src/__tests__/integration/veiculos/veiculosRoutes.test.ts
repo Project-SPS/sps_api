@@ -33,12 +33,10 @@ describe("Testando rotas de veículos", () => {
         );
 
         await res.query(
-          `INSERT INTO policiais (id, cod_registro, patente, senha, administrador, ativo, "cidadaoId") VALUES ('f45aa9a8-43b6-441d-badd-516533fc0121', '987654321', 'Tenente', '$2a$10$gDRF06cY6P3a9wof8GAMSOWcRUOo/VWJi57VzeD6hAgSq3QTcb9T2', 'true', 'true', '8eacefda-26c4-47bd-9c96-acc082706401');`  
+          `INSERT INTO policiais (id, cod_registro, patente, senha, administrador, ativo, "cidadaoId") VALUES ('f45aa9a8-43b6-441d-badd-516533fc0121', '987654321', 'Tenente', '$2a$10$gDRF06cY6P3a9wof8GAMSOWcRUOo/VWJi57VzeD6hAgSq3QTcb9T2', 'true', 'true', '8eacefda-26c4-47bd-9c96-acc082706401');`
         );
       })
-      .catch((err) =>
-        console.error("Error during data source initialization", err)
-      );
+      .catch((err) => console.error("Error during data source initialization", err));
   });
 
   afterAll(async () => {
@@ -48,8 +46,8 @@ describe("Testando rotas de veículos", () => {
   test("GET /veiculos/:identifier - Deve ser possível listar um veículo", async () => {
     const login = await request(app).post("/sessions").send({
       cod_registro: "987654321",
-      senha: "1234"
-    })
+      senha: "1234",
+    });
     const result = await request(app).get(`/veiculos/${identifier}`).set("Authorization", `Bearer ${login.body.token}`).send();
 
     expect(result.status).toBe(200);
@@ -65,8 +63,8 @@ describe("Testando rotas de veículos", () => {
   test("GET /veiculos/:identifier - Deve retornar erro se o identificador (placa ou chassi) não estiver cadastrado", async () => {
     const login = await request(app).post("/sessions").send({
       cod_registro: "987654321",
-      senha: "1234"
-    })
+      senha: "1234",
+    });
     const result = await request(app).get(`/veiculos/${invalidIdentifier}`).set("Authorization", `Bearer ${login.body.token}`).send();
 
     expect(result.status).toBe(404);
@@ -76,11 +74,12 @@ describe("Testando rotas de veículos", () => {
   test("POST /veiculos/multas/:identifier - Deve ser possível multar um veículo", async () => {
     const login = await request(app).post("/sessions").send({
       cod_registro: "987654321",
-      senha: "1234"
-    })
+      senha: "1234",
+    });
     const result = await request(app)
       .post(`/veiculos/multas/${identifier}`)
-      .send({ multaId }).set("Authorization", `Bearer ${login.body.token}`).send();
+      .set("Authorization", `Bearer ${login.body.token}`)
+      .send({ multaId });
 
     expect(result.status).toBe(201);
     expect(result.body).toHaveProperty("message");
@@ -89,11 +88,26 @@ describe("Testando rotas de veículos", () => {
   test("POST /veiculos/multas/:identifier - Não deve ser possível multar um veículo com identificador inválido", async () => {
     const login = await request(app).post("/sessions").send({
       cod_registro: "987654321",
-      senha: "1234"
-    })
+      senha: "1234",
+    });
     const result = await request(app)
       .post(`/veiculos/multas/${invalidIdentifier}`)
-      .send({ multaId }).set("Authorization", `Bearer ${login.body.token}`).send();
+      .set("Authorization", `Bearer ${login.body.token}`)
+      .send({ multaId });
+
+    expect(result.status).toBe(404);
+    expect(result.body).toHaveProperty("message");
+  });
+
+  test("POST /veiculos/multas/:identifier - Não deve ser possível multar um veículo com código da multa (id) não existente", async () => {
+    const login = await request(app).post("/sessions").send({
+      cod_registro: "987654321",
+      senha: "1234",
+    });
+    const result = await request(app)
+      .post(`/veiculos/multas/${identifier}`)
+      .set("Authorization", `Bearer ${login.body.token}`)
+      .send({ multaId: "f9380c90-37eb-4116-95b8-017c2c7c6d10" });
 
     expect(result.status).toBe(404);
     expect(result.body).toHaveProperty("message");
@@ -102,21 +116,22 @@ describe("Testando rotas de veículos", () => {
   test("POST /veiculos/multas/:identifier - Não deve ser possível multar um veículo com código da multa (id) inválido", async () => {
     const login = await request(app).post("/sessions").send({
       cod_registro: "987654321",
-      senha: "1234"
-    })
+      senha: "1234",
+    });
     const result = await request(app)
       .post(`/veiculos/multas/${identifier}`)
-      .send({ multaId: "invalido" }).set("Authorization", `Bearer ${login.body.token}`);
+      .set("Authorization", `Bearer ${login.body.token}`)
+      .send({ multaId: "invalido." });
 
-    expect(result.status).toBe(404);
+    expect(result.status).toBe(400);
     expect(result.body).toHaveProperty("message");
   });
 
   test("GET /veiculos/multas/:identifier - Deve ser possível listar as multas de um veículo", async () => {
     const login = await request(app).post("/sessions").send({
       cod_registro: "987654321",
-      senha: "1234"
-    })
+      senha: "1234",
+    });
     const result = await request(app).get(`/veiculos/multas/${identifier}`).set("Authorization", `Bearer ${login.body.token}`).send();
 
     expect(result.status).toBe(200);
@@ -131,11 +146,12 @@ describe("Testando rotas de veículos", () => {
   test("GET /veiculos/multas/:identifier - Não deve ser possível listar as multas de um veículo com identificador inválido", async () => {
     const login = await request(app).post("/sessions").send({
       cod_registro: "987654321",
-      senha: "1234"
-    })
-    const result = await request(app).get(
-      `/veiculos/multas/${invalidIdentifier}`
-    ).set("Authorization", `Bearer ${login.body.token}`).send();
+      senha: "1234",
+    });
+    const result = await request(app)
+      .get(`/veiculos/multas/${invalidIdentifier}`)
+      .set("Authorization", `Bearer ${login.body.token}`)
+      .send();
 
     expect(result.status).toBe(404);
     expect(result.body).toHaveProperty("message");
@@ -144,8 +160,8 @@ describe("Testando rotas de veículos", () => {
   test("GET /veiculos/cidadao/:cpf - Deve ser possível listar os carros de um cidadão usando seu cpf", async () => {
     const login = await request(app).post("/sessions").send({
       cod_registro: "987654321",
-      senha: "1234"
-    })
+      senha: "1234",
+    });
     const result = await request(app).get(`/veiculos/cidadao/${cpf}`).set("Authorization", `Bearer ${login.body.token}`).send();
 
     expect(result.status).toBe(200);
@@ -162,8 +178,8 @@ describe("Testando rotas de veículos", () => {
   test("GET /veiculos/cidadao/:cpf - Não deve ser possível listar os carros de um cidadão com cpf não cadastrado", async () => {
     const login = await request(app).post("/sessions").send({
       cod_registro: "987654321",
-      senha: "1234"
-    })
+      senha: "1234",
+    });
     const result = await request(app).get(`/veiculos/cidadao/${invalidCpf}`).set("Authorization", `Bearer ${login.body.token}`).send();
 
     expect(result.status).toBe(404);

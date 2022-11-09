@@ -5,7 +5,7 @@ import app from "../../../app";
 import { mockedUUIDs } from "../../mock";
 import * as bcrypt from "bcryptjs";
 
-describe("/boletim", () => {
+describe("/boletins", () => {
   let connection: DataSource;
 
   const hashedPassword = bcrypt.hashSync("1234", 10);
@@ -69,10 +69,10 @@ describe("/boletim", () => {
     await connection.destroy();
   });
 
-  test("Deve ser possível criar um boletim sem veículo", async () => {
+  test("POST /boletins - Deve ser possível criar um boletim sem veículo", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
     const result = await request(app)
-      .post("/boletim")
+      .post("/boletins")
       .set("Authorization", `Bearer ${notAdminLogin.body.token}`)
       .send(mockedBoletimWithoutVehicle);
 
@@ -85,10 +85,10 @@ describe("/boletim", () => {
     expect(result.body).toHaveProperty("cidadao");
   });
 
-  test("Deve ser possível criar um boletim", async () => {
+  test("POST /boletins - Deve ser possível criar um boletim", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
 
-    const result = await request(app).post("/boletim").set("Authorization", `Bearer ${notAdminLogin.body.token}`).send(mockedBoletim);
+    const result = await request(app).post("/boletins").set("Authorization", `Bearer ${notAdminLogin.body.token}`).send(mockedBoletim);
     expect(result.status).toBe(201);
     expect(result.body).toHaveProperty("id");
     expect(result.body).toHaveProperty("descricao");
@@ -101,89 +101,89 @@ describe("/boletim", () => {
     boletimId = result.body.id;
   });
 
-  test("Não deve ser possível criar um boletim com token inválido", async () => {
-    const result = await request(app).post("/boletim").set("Authorization", `Bearer invalid_token`).send(mockedBoletim);
-    
+  test("POST /boletins - Não deve ser possível criar um boletim com token inválido", async () => {
+    const result = await request(app).post("/boletins").set("Authorization", `Bearer invalid_token`).send(mockedBoletim);
+
     expect(result.status).toBe(401);
     expect(result.body).toHaveProperty("message");
   });
 
-  test("Deve ser possível listar um boletim pelo seu id", async () => {
+  test("GET /boletins/:id - Deve ser possível listar um boletim pelo seu id", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
 
-    const result = await request(app).get(`/boletim/${boletimId}`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
+    const result = await request(app).get(`/boletins/${boletimId}`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
 
     expect(result.status).toBe(200);
     expect(result.body).toHaveProperty("id");
   });
 
-  test("Não deve ser possível listar um boletim com id inválido", async () => {
+  test("GET /boletins/:id - Não deve ser possível listar um boletim com id inválido", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
 
-    const result = await request(app).get(`/boletim/invalidId`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
+    const result = await request(app).get(`/boletins/invalidId`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
 
     expect(result.status).toBe(404);
     expect(result.body).toHaveProperty("message");
   });
 
-  test("Deve ser possível atualizar o status de um boletim", async () => {
+  test("PATCH /boletins/:id - Deve ser possível atualizar o status de um boletim", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
 
     const result = await request(app)
-      .patch(`/boletim/${boletimId}`)
+      .patch(`/boletins/${boletimId}`)
       .set("Authorization", `Bearer ${notAdminLogin.body.token}`)
       .send({ finalizado: true });
 
-    expect(result.status).toBe(201);
+    expect(result.status).toBe(200);
     expect(result.body).toHaveProperty("id");
     expect(result.body.finalizado).toBe(true);
   });
 
-  test("Não deve ser possível atualizar outras colunas do boletim", async () => {
+  test("PATCH /boletins/:id - Não deve ser possível atualizar outras colunas do boletim", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
 
     const result = await request(app)
-      .patch(`/boletim/${boletimId}`)
+      .patch(`/boletins/${boletimId}`)
       .set("Authorization", `Bearer ${notAdminLogin.body.token}`)
       .send({ descricao: "nova descricao", finalizado: true });
 
-    expect(result.status).toBe(201);
+    expect(result.status).toBe(200);
     expect(result.body.descricao).not.toBe("nova descricao");
   });
 
-  test("Deve ser possível listar os boletins de um cidadão pelo seu cpf", async () => {
+  test("GET /boletins/cidadao/:cpf - Deve ser possível listar os boletins de um cidadão pelo seu cpf", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
 
-    const result = await request(app).get(`/boletim/cidadao/99999999999`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
+    const result = await request(app).get(`/boletins/cidadao/99999999999`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
 
     expect(result.status).toBe(200);
     expect(result.body).toHaveProperty("map");
     expect(result.body).toHaveLength(2);
   });
 
-  test("Não deve ser possível listar os boletins de um cidadão com CPF inválido", async () => {
+  test("GET /boletins/cidadao/:cpf - Não deve ser possível listar os boletins de um cidadão com CPF inválido", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
 
-    const result = await request(app).get(`/boletim/cidadao/99999999998`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
+    const result = await request(app).get(`/boletins/cidadao/99999999998`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
 
     expect(result.status).toBe(404);
     expect(result.body).toHaveProperty("message");
   });
 
-  test("Deve ser possível listar os boletins de um veículo pela sua placa", async () => {
+  test("GET /boletins/veiculo/:placa - Deve ser possível listar os boletins de um veículo pela sua placa", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
 
-    const result = await request(app).get(`/boletim/veiculo/pdf-0001`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
+    const result = await request(app).get(`/boletins/veiculo/pdf-0001`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
 
     expect(result.status).toBe(200);
     expect(result.body).toHaveProperty("map");
     expect(result.body).toHaveLength(1);
   });
 
-  test("Não deve ser possível listar os boletins de um veículo com placa inválida", async () => {
+  test("GET /boletins/veiculo/:placa - Não deve ser possível listar os boletins de um veículo com placa inválida", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
 
-    const result = await request(app).get(`/boletim/veiculo/pdf-0000`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
+    const result = await request(app).get(`/boletins/veiculo/pdf-0000`).set("Authorization", `Bearer ${notAdminLogin.body.token}`);
 
     expect(result.status).toBe(404);
     expect(result.body).toHaveProperty("message");

@@ -13,6 +13,6 @@ export const appRoutes = (app: Express) => {
   app.use("/policiais", policeRoutes);
   app.use("/cidadaos", cidadaosRoutes);
   app.use("/multas", multasRoutes);
-  app.use("/boletim", boletimRoutes);
+  app.use("/boletins", boletimRoutes);
   app.use("/procurados", procuradosRoutes);
 };
