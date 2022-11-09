@@ -3,30 +3,37 @@ import { Policial } from "../../entity/Policial.entity";
 import { IPolicialRequest } from "../../interfaces/policial.interfaces";
 import { AppError } from "../../errors/AppError";
 import bcryptjs from "bcryptjs";
+import { Cidadao } from "../../entity/Cidadao.entity";
 
-const createPolicialService = async ({cod_registro, patente, senha, administrador}: IPolicialRequest): Promise<Policial> => {
+const createPolicialService = async ({ cod_registro, patente, senha, administrador, cidadaoId }: IPolicialRequest): Promise<Policial> => {
+  const policeRepository = AppDataSource.getRepository(Policial);
+  const citizenRepository = AppDataSource.getRepository(Cidadao);
 
-    const policeRepository = AppDataSource.getRepository(Policial);
+  const citizen = await citizenRepository.findOneBy({ id: cidadaoId });
 
-    const cod_registerExist = await policeRepository.findOneBy({cod_registro});
+  if (!citizen) {
+    throw new AppError("Cidadão não encontrado", 404);
+  }
 
-    if(cod_registerExist) {
-        throw new AppError("This cod is already being used", 400);
-    }
+  const cod_registerExist = await policeRepository.findOneBy({ cod_registro });
 
-    senha = bcryptjs.hashSync(senha, 10);
+  if (cod_registerExist) {
+    throw new AppError("Código de registro já existente", 400);
+  }
 
-    const newPolice = policeRepository.create({
-        cod_registro,
-        patente,
-        administrador,
-        senha
-});
+  senha = bcryptjs.hashSync(senha, 10);
 
-await policeRepository.save(newPolice);
+  const newPolice = policeRepository.create({
+    cod_registro,
+    patente,
+    administrador,
+    senha,
+    cidadao: citizen,
+  });
 
-return newPolice;
+  await policeRepository.save(newPolice);
 
-}
+  return newPolice;
+};
 
 export default createPolicialService;

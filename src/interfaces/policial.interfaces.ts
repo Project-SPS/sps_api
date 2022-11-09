@@ -3,16 +3,17 @@ export interface IPolicialRequest {
   patente: string;
   senha: string;
   administrador: boolean;
+  cidadaoId: string;
 }
 
 export interface IPolicialResponse {
   id: string;
-  cod_registro: string;
-  patente: string;
-  administrador: boolean;
   ativo: boolean;
   data_criacao: Date;
   data_atualizacao: Date;
+  cod_registro: string;
+  patente: string;
+  administrador: boolean;
 }
 
 export interface IPolicialLogin {

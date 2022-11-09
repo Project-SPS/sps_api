@@ -7,7 +7,7 @@ export const verifyAuth = async (req: Request, res: Response, next: NextFunction
   let token = req.headers.authorization;
 
   if (!token) {
-    throw new AppError("Invalid token", 401);
+    throw new AppError("Token não encontrado", 401);
   }
 
   token = token.split(" ")[1];

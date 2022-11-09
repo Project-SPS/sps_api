@@ -3,28 +3,40 @@ import { IProcurados } from "../../interfaces/procurados.interfaces";
 import { Procurado } from "../../entity/Procurado.entity";
 import { Cidadao } from "../../entity/Cidadao.entity";
 import { AppError } from "../../errors/AppError";
-const createFugitiveServices = async (fugitive: IProcurados) => {
+// import { v2 as cloudinary } from "cloudinary";
+// import fs from "fs";
+
+const createFugitiveServices = async (fugitive: IProcurados, image: any) => {
   const fugitivesRepository = AppDataSource.getRepository(Procurado);
   const citiziensRepository = AppDataSource.getRepository(Cidadao);
 
-  const getCitiezen = await citiziensRepository.findOneBy({
-    id: fugitive.cidadao_id,
+  const getCitizen = await citiziensRepository.findOneBy({
+    cpf: fugitive.cpf,
   });
 
-  if (!getCitiezen) {
+  if (!getCitizen) {
     throw new AppError("Cidadão não encontrado", 404);
   }
+
+  // const cloudinaryImage = await cloudinary.uploader.upload(image.path, (error: Error, result: any) => result);
+  // fs.unlink(image.path, (error) => {
+  //   if (error) {
+  //     console.log(error);
+  //   }
+  // });
 
   const newFugitive = new Procurado();
 
   newFugitive.descricao = fugitive.descricao;
-  newFugitive.esta_ativo = fugitive.esta_ativo;
-
-  fugitivesRepository.create(newFugitive);
+  if (fugitive.esta_ativo) {
+    newFugitive.esta_ativo = fugitive.esta_ativo;
+  }
+  newFugitive.cidadao = getCitizen;
+  // newFugitive.image = cloudinaryImage.url;
 
   await fugitivesRepository.save(newFugitive);
 
-  return fugitive;
+  return newFugitive;
 };
 
 export default createFugitiveServices;

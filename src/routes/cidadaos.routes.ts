@@ -1,9 +1,13 @@
-import { Router } from "express"
-import { listCitizensController, searchCitizenByCpfController } from "../controllers/cidadaos"
+import { Router } from "express";
+import {
+  listCitizensController,
+  searchCitizenByCpfController,
+} from "../controllers/cidadaos";
+import { verifyAuth } from "../middlewares";
 
-const cidadaosRoutes = Router()
+const cidadaosRoutes = Router();
 
-cidadaosRoutes.get("", listCitizensController)
-cidadaosRoutes.get("/:cpf", searchCitizenByCpfController)
+cidadaosRoutes.get("", verifyAuth, listCitizensController);
+cidadaosRoutes.get("/:cpf", verifyAuth, searchCitizenByCpfController);
 
-export default cidadaosRoutes
+export default cidadaosRoutes;

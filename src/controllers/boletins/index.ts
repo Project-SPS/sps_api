@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
-import { start } from "repl";
 import { AppError } from "../../errors/AppError";
-import {
-  IBoletimRequest,
-  IBoletimUpdateRequest,
-} from "../../interfaces/boletim.interfaces";
+import { IBoletimRequest, IBoletimUpdateRequest } from "../../interfaces/boletim.interfaces";
 import createBulletinService from "../../services/boletim/createBulletin.services";
 import updateBulletinService from "../../services/boletim/updateBulletin.services";
 import listBulletinCitizenService from "../../services/boletim/listBulletinCitizen.services";
@@ -21,7 +17,7 @@ const updateBulletinController = async (req: Request, res: Response) => {
   const id: string = req.params.id;
   const data: IBoletimUpdateRequest = req.body;
   const update = await updateBulletinService(data, id);
-  return res.status(201).json(update);
+  return res.status(200).json(update);
 };
 
 const listBulletinCitizenController = async (req: Request, res: Response) => {
@@ -34,7 +30,7 @@ const listBulletinVehicleController = async (req: Request, res: Response) => {
   try {
     const placa: string = req.params.placa;
     const list = await listBulletinVehicleService(placa);
-    return res.status(201).json(list);
+    return res.status(200).json(list);
   } catch (error) {
     if (error instanceof AppError) {
       return res.status(error.statusCode).json({ message: error.message });
@@ -45,7 +41,7 @@ const listBulletinVehicleController = async (req: Request, res: Response) => {
 const listBulletinController = async (req: Request, res: Response) => {
   const id: string = req.params.id;
   const bulletin = await listBulletinService(id);
-  return res.status(201).json(bulletin);
+  return res.status(200).json(bulletin);
 };
 
 export {

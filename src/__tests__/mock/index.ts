@@ -1,4 +1,5 @@
 import { IPolicialLogin, IPolicialRequest } from "../../interfaces/policial.interfaces";
+import { IProcurados, IProcuradosRequest } from "../../interfaces/procurados.interfaces";
 
 export const mockedUUIDs = [
   "cd43fa71-7a34-4e76-9251-e8e742a97849",
@@ -16,6 +17,7 @@ export const mockedPolice: IPolicialRequest = {
   cod_registro: "987654321",
   patente: "Soldado",
   senha: "nklfesf745ds",
+  cidadaoId: mockedUUIDs[1],
 };
 
 export const nonAdminPoliceLogin: IPolicialLogin = {
@@ -39,4 +41,27 @@ export const mockedPoliceWithoutPassword = {
   administrador: false,
   cod_registro: 78451245,
   patente: "Capitão",
+};
+
+export const mockedSessions = {
+  cod_registro: "000000001",
+  senha: "1234",
+};
+
+export const mockedSessionsWrongPassword = {
+  cod_registro: "000000001",
+  senha: "12345",
+};
+
+export const mockedSessionsWrongCodeRegister = {
+  cod_registro: "00000000",
+  senha: "12345",
+};
+
+export const mockedCitizenNotFound = {
+  cpf: "12345654321",
+};
+export const mockedWantedCititzen: IProcuradosRequest = {
+  descricao: "Procurado pela justiça.",
+  cpf: "01551551245",
 };
