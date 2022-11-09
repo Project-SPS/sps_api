@@ -1,5 +1,5 @@
 import { IPolicialLogin, IPolicialRequest } from "../../interfaces/policial.interfaces";
-import { IProcurados } from "../../interfaces/procurados.interfaces";
+import { IProcurados, IProcuradosRequest } from "../../interfaces/procurados.interfaces";
 
 export const mockedUUIDs = [
   "cd43fa71-7a34-4e76-9251-e8e742a97849",
@@ -61,8 +61,7 @@ export const mockedSessionsWrongCodeRegister = {
 export const mockedCitizenNotFound = {
   cpf: "12345654321",
 };
-export const mockedWantedCititzen: IProcurados = {
-  cidadaoId: mockedUUIDs[0],
+export const mockedWantedCititzen: IProcuradosRequest = {
   descricao: "Procurado pela justiça.",
-  policialId: mockedUUIDs[2],
+  cpf: "01551551245",
 };

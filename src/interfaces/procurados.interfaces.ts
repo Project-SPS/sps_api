@@ -10,6 +10,11 @@ export interface IProcurados {
   image?: any;
 }
 
+export interface IProcuradosRequest {
+  cpf: string;
+  descricao: string;
+}
+
 export interface IProcuradosUpdate {
   esta_ativo: boolean;
 }

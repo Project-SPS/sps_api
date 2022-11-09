@@ -4,26 +4,13 @@ import listFugitivesController from "../controllers/procurados/listFugitives.con
 import listOneFugitiveController from "../controllers/procurados/listOneFugitive.controllers";
 import updateFugitiveController from "../controllers/procurados/updateFugitive.controllers";
 import { verifyAuth, verifySerialization } from "../middlewares";
-import {
-  createFugitiveSerializer,
-  updateFugitiveSerializer,
-} from "../serializers";
+import { createFugitiveSerializer, updateFugitiveSerializer } from "../serializers";
 
 const procuradosRoutes = Router();
 
 procuradosRoutes.get("", verifyAuth, listFugitivesController);
 procuradosRoutes.get("/:cpf", verifyAuth, listOneFugitiveController);
-procuradosRoutes.post(
-  "",
-  verifySerialization(createFugitiveSerializer),
-  verifyAuth,
-  createFugitiveController
-);
-procuradosRoutes.patch(
-  "/:cpf",
-  verifySerialization(updateFugitiveSerializer),
-  verifyAuth,
-  updateFugitiveController
-);
+procuradosRoutes.post("", verifySerialization(createFugitiveSerializer), verifyAuth, createFugitiveController);
+procuradosRoutes.patch("/:id", verifySerialization(updateFugitiveSerializer), verifyAuth, updateFugitiveController);
 
 export default procuradosRoutes;

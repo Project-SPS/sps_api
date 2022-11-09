@@ -22,6 +22,7 @@ const createFugitiveServices = async (fugitive: IProcurados, image: any) => {
   //     console.log(error);
   //   }
   // });
+
   const newFugitive = new Procurado();
 
   newFugitive.descricao = fugitive.descricao;
