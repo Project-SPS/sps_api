@@ -6,7 +6,7 @@ export interface IProcurados {
   policialId: string;
   veiculoId?: string;
   cidadaoId?: string;
-  cpf: string;
+  cpf?: string;
   image?: any;
 }
 
