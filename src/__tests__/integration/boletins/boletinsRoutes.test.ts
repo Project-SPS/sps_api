@@ -71,7 +71,6 @@ describe("/boletim", () => {
 
   test("Deve ser possível criar um boletim sem veículo", async () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
-
     const result = await request(app)
       .post("/boletim")
       .set("Authorization", `Bearer ${notAdminLogin.body.token}`)
@@ -90,7 +89,6 @@ describe("/boletim", () => {
     const notAdminLogin = await request(app).post("/sessions").send(mockedPoliceLogin);
 
     const result = await request(app).post("/boletim").set("Authorization", `Bearer ${notAdminLogin.body.token}`).send(mockedBoletim);
-
     expect(result.status).toBe(201);
     expect(result.body).toHaveProperty("id");
     expect(result.body).toHaveProperty("descricao");
@@ -105,7 +103,7 @@ describe("/boletim", () => {
 
   test("Não deve ser possível criar um boletim com token inválido", async () => {
     const result = await request(app).post("/boletim").set("Authorization", `Bearer invalid_token`).send(mockedBoletim);
-
+    
     expect(result.status).toBe(401);
     expect(result.body).toHaveProperty("message");
   });
