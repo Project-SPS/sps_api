@@ -16,15 +16,12 @@ const createFugitiveServices = async (fugitive: IProcurados, image: any) => {
   if (!getCitizen) {
     throw new AppError("Cidadão não encontrado", 404);
   }
-
-  const cloudinaryImage = await cloudinary.uploader.upload(image.path, (error: Error, result: any) => result);
-
-  fs.unlink(image.path, (error) => {
-    if (error) {
-      console.log(error);
-    }
-  });
-
+  // const cloudinaryImage = await cloudinary.uploader.upload(image.path, (error: Error, result: any) => result);
+  // fs.unlink(image.path, (error) => {
+  //   if (error) {
+  //     console.log(error);
+  //   }
+  // });
   const newFugitive = new Procurado();
 
   newFugitive.descricao = fugitive.descricao;

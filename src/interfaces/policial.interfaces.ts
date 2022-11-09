@@ -3,6 +3,7 @@ export interface IPolicialRequest {
   patente: string;
   senha: string;
   administrador: boolean;
+  cidadaoId: string;
 }
 
 export interface IPolicialResponse {
@@ -13,7 +14,6 @@ export interface IPolicialResponse {
   cod_registro: string;
   patente: string;
   administrador: boolean;
-
 }
 
 export interface IPolicialLogin {
