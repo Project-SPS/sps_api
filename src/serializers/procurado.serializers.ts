@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 export const createFugitiveSerializer = yup.object().shape({
   descricao: yup.string().required(),
-  ativo: yup
+  esta_ativo: yup
     .boolean()
     .default(() => true)
     .transform(() => true),
@@ -10,5 +10,5 @@ export const createFugitiveSerializer = yup.object().shape({
 });
 
 export const updateFugitiveSerializer = yup.object().shape({
-  ativo: yup.boolean().required(),
+  esta_ativo: yup.boolean().required(),
 });
