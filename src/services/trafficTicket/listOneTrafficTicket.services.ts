@@ -10,7 +10,7 @@ const listOneTrafficTicketService = async (id: string) => {
   });
 
   if (!trafficTicket) {
-    throw new AppError("Multa não econtrada", 404);
+    throw new AppError("Multa não encontrada", 404);
   }
 
   return trafficTicket;

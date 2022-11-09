@@ -9,7 +9,7 @@ const updatePolicialService = async (cod_registro: string, data: IPolicialUpdate
   const police = await policeRepository.findOneBy({ cod_registro });
 
   if (!police) {
-    throw new AppError("user not found!", 404);
+    throw new AppError("Usuário não encontrado", 404);
   }
 
   await policeRepository.update(police.id, { ...data });

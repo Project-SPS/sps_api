@@ -12,11 +12,11 @@ const retrieveVehicleService = async (identifier: string): Promise<Veiculo> => {
   } else if (identifier.length === 17) {
     veiculo = await veiculoRepository.findOneBy({ chassi: identifier });
   } else {
-    throw new AppError("Bad request", 400);
+    throw new AppError("Chassi ou placa inválidos", 400);
   }
 
   if (!veiculo) {
-    throw new AppError("Vehicle not found!", 404);
+    throw new AppError("Veículo não encontrado", 404);
   }
 
   return veiculo;

@@ -7,6 +7,7 @@ export const createFugitiveSerializer = yup.object().shape({
     .default(() => true)
     .transform(() => true),
   cpf: yup.string().required(),
+  image: yup.string(),
 });
 
 export const updateFugitiveSerializer = yup.object().shape({
