@@ -3,16 +3,17 @@ import { Policial } from "../../entity/Policial.entity";
 import { IPolicialResponse } from "../../interfaces/policial.interfaces";
 
 const listPoliciaisService = async (): Promise<IPolicialResponse[]> => {
+  const policeRepository = AppDataSource.getRepository(Policial);
 
-    const policeRepository = AppDataSource.getRepository(Policial);
+  const polices = (
+    await policeRepository.find({ relations: { cidadao: true } })
+  ).map((police) => {
+    const { senha, ...policeRest } = police;
 
-    const polices = (await policeRepository.find()).map(police => {
-        const { senha, ...policeRest } = police;
+    return policeRest;
+  });
 
-        return policeRest;
-    });
-
-    return polices;
-}
+  return polices;
+};
 
 export default listPoliciaisService;
