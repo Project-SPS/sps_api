@@ -81,7 +81,7 @@ export class productionMigration1668018062130 implements MigrationInterface {
             ('981a4191-45d3-4afe-99f5-023970e1426c', 'BRA0S18', 'vermelho', 'Sentra SR 2.0 Flex Fuel 16V Mec.', 'Nissan', '7mK6TCV77B6PA7957', '9abcdcbb-2917-430a-94dd-2e1923bfe20d', 2022),
             ('c559c83d-ee9f-4a8d-9c03-f72f8ec705ef', 'HBR8F98', 'marrom', 'Impreza GL 4x4 1.8 16V', 'Subaru', '6F7yfhx3u1RfU5988', '9c9d4c25-0e14-41c1-8ef2-d8d168d339f7', 1993),
             ('322bb589-e17e-4302-9388-eb972ea66907', 'PHQ-1245', 'cinza', '575M Maranello F1 V12 515cv', 'Ferrari', '499nRBbvyeexe3648', 'f8fbbdf6-1b7a-4cce-9e15-d6d4ba99bd66', 2017),
-            ('454bde2c-55e6-4230-bb4b-3b9f0ba278d5', 'GSS-9780', 'preto', 'Trans-AM 5.7 V8', 'Pontiac', '39r87UjwDDbU04024', '7da45da8-1b7a-4cce-9e15-d6d4ba99bd66', 2005),
+            ('454bde2c-55e6-4230-bb4b-3b9f0ba278d5', 'GSS-9780', 'preto', 'Trans-AM 5.7 V8', 'Pontiac', '39r87UjwDDbU04024', '7da45da8-1b7a-4cce-9e15-d6d4ba99bd66', 2005)
         `);
     await queryRunner.query(`
         INSERT INTO policiais (id, patente, senha, administrador, ativo, data_criacao, data_atualizacao, "cidadaoId", cod_registro) VALUES
