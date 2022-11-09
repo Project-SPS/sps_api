@@ -68,13 +68,13 @@ export class productionMigration1668018062130 implements MigrationInterface {
 
     await queryRunner.query(`INSERT INTO cidadaos (id, nome, idade, email, cpf, data_nascimento, "enderecoId")
         VALUES
-            ('40d747f9-e836-4c8a-b898-b5d7ab474d3b', 'Filipe', 23, 'filipe@gmail.com', '55078318070', '27/05/1999', 'fade7ad9-0624-4d34-b684-1b08cbfa9928'),
-            ('780c4fa5-39e9-48e9-9a90-2184ffbe0255', 'Vitor', 29, 'vitor@gmail.com', '24645335057', '27/05/1999', '3bb6c4c2-f2e5-4692-a935-cd07258b0600'),
-            ('9abcdcbb-2917-430a-94dd-2e1923bfe20d', 'João', 23, 'joao@gmail.com', '81023429004', '27/05/1999', 'b5c86df0-2f95-49a3-ad74-d1c2174ae842'),
-            ('9c9d4c25-0e14-41c1-8ef2-d8d168d339f7', 'Matheus', 25, 'matheus.albuquerque@gmail.com', '79173077003', '27/05/1999', '47b03bb6-a97a-4080-8384-f19875dec385'),
-            ('4f54f298-f52d-446f-af69-29adb59532ba', 'Calebe', 24, 'calebe_araujo@gmail.com', '71029487006', '27/05/1999', 'fd73f66d-264c-4835-ac61-9a4c0680b774'),
-            ('f8fbbdf6-1b7a-4cce-9e15-d6d4ba99bd66', 'Antonio', 23, 'antonio123@gmail.com', '89842467007', '27/05/1999', '1cf83a76-9c4a-42cb-ab3d-1e9dfef71524'),
-            ('7da45da8-1b7a-4cce-9e15-d6d4ba99bd66', 'Marcos', 23, 'marcos@gmail.com', '76860584092', '15/04/2003', '1cf83a76-9c4a-42cb-ab3d-1e9dfef71524')`);
+            ('40d747f9-e836-4c8a-b898-b5d7ab474d3b', 'Filipe', 23, 'filipe@gmail.com', '55078318070', '1999/05/27', 'fade7ad9-0624-4d34-b684-1b08cbfa9928'),
+            ('780c4fa5-39e9-48e9-9a90-2184ffbe0255', 'Vitor', 29, 'vitor@gmail.com', '24645335057', '1999/05/27', '3bb6c4c2-f2e5-4692-a935-cd07258b0600'),
+            ('9abcdcbb-2917-430a-94dd-2e1923bfe20d', 'João', 23, 'joao@gmail.com', '81023429004', '1999/05/27', 'b5c86df0-2f95-49a3-ad74-d1c2174ae842'),
+            ('9c9d4c25-0e14-41c1-8ef2-d8d168d339f7', 'Matheus', 25, 'matheus.albuquerque@gmail.com', '79173077003', '1999/05/27', '47b03bb6-a97a-4080-8384-f19875dec385'),
+            ('4f54f298-f52d-446f-af69-29adb59532ba', 'Calebe', 24, 'calebe_araujo@gmail.com', '71029487006', '1999/05/27', 'fd73f66d-264c-4835-ac61-9a4c0680b774'),
+            ('f8fbbdf6-1b7a-4cce-9e15-d6d4ba99bd66', 'Antonio', 23, 'antonio123@gmail.com', '89842467007', '1999/05/27', '1cf83a76-9c4a-42cb-ab3d-1e9dfef71524'),
+            ('7da45da8-1b7a-4cce-9e15-d6d4ba99bd66', 'Marcos', 23, 'marcos@gmail.com', '76860584092', '2003/04/15', '1cf83a76-9c4a-42cb-ab3d-1e9dfef71524')`);
     await queryRunner.query(`
         INSERT INTO veiculos (id, placa, cor, modelo, marca, chassi, "cidadaoId", ano) VALUES
             ('93063b57-6611-4792-ac6a-151a2fc6d3bf', 'ABC-0001', 'branco', '2500 LARAMIE SLT 6.7 TDI  CD 4x4 Diesel', 'RAM', '9BWSU19F08B302158', '780c4fa5-39e9-48e9-9a90-2184ffbe0255', 2022),
