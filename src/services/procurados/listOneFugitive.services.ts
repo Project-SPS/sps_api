@@ -12,15 +12,20 @@ const listOneFugitiveService = async (cpf: string) => {
     cpf: cpf,
   });
 
-  const getFugitive = await fugitiveRepository.find({
+  if (!getCitiezen) {
+    throw new AppError("Cidadão não existe", 404);
+  }
+
+  const getFugitive = await fugitiveRepository.findOne({
+    where: {
+      cidadao: {
+        cpf,
+      },
+    },
     relations: {
       cidadao: true,
     },
   });
-
-  if (!getCitiezen) {
-    throw new AppError("Cidadão não existe", 404);
-  }
 
   if (!getFugitive) {
     throw new AppError("Procurado não encontrado", 404);

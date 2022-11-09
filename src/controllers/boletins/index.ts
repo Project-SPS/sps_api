@@ -17,7 +17,7 @@ const updateBulletinController = async (req: Request, res: Response) => {
   const id: string = req.params.id;
   const data: IBoletimUpdateRequest = req.body;
   const update = await updateBulletinService(data, id);
-  return res.status(201).json(update);
+  return res.status(200).json(update);
 };
 
 const listBulletinCitizenController = async (req: Request, res: Response) => {
