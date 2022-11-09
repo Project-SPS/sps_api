@@ -30,11 +30,19 @@ export const searchCitizenByCpfService = async (cpf: string) => {
     where: {
       cpf,
     },
+    select: {
+      policial: {
+        ativo: true,
+        patente: true,
+        cod_registro: true,
+      },
+    },
     relations: {
       boletim: true,
       veiculo: true,
       endereco: true,
       procurado: true,
+      policial: true,
     },
   });
 

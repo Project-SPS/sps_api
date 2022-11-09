@@ -3,7 +3,7 @@ import { IProcuradosUpdate } from "../../interfaces/procurados.interfaces";
 import { Procurado } from "../../entity/Procurado.entity";
 import { AppError } from "../../errors/AppError";
 
-const updateFugitiveService = async (body: IProcuradosUpdate, cpf: string) => {
+const updateFugitiveService = async (body: IProcuradosUpdate, id: string) => {
   const fugitivesRepository = AppDataSource.getRepository(Procurado);
 
   const fugitiveExists = await fugitivesRepository.find({
@@ -11,26 +11,22 @@ const updateFugitiveService = async (body: IProcuradosUpdate, cpf: string) => {
       cidadao: true,
     },
     where: {
-      cidadao: {
-        cpf: cpf,
-      },
+      id,
     },
   });
 
-  if (!fugitiveExists) {
+  if (fugitiveExists.length <= 0) {
     throw new AppError("Procurado não existe", 404);
   }
 
   await fugitivesRepository.update(fugitiveExists[0].id, body);
 
-  const updatedFugitive = await fugitivesRepository.find({
+  const updatedFugitive = await fugitivesRepository.findOne({
     relations: {
       cidadao: true,
     },
     where: {
-      cidadao: {
-        cpf: cpf,
-      },
+      id,
     },
   });
 

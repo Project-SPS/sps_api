@@ -6,7 +6,7 @@ export const createFugitiveSerializer = yup.object().shape({
     .boolean()
     .default(() => true)
     .transform(() => true),
-  cidadaoId: yup.string().required(),
+  cpf: yup.string().required(),
 });
 
 export const updateFugitiveSerializer = yup.object().shape({

@@ -2,23 +2,20 @@ import { AppDataSource } from "../../data-source";
 import { Policial } from "../../entity/Policial.entity";
 import { AppError } from "../../errors/AppError";
 
-const deletePolicialService = async (id: string): Promise<void> => {
+const deletePolicialService = async (cod_registro: string): Promise<void> => {
+  const policeRepository = AppDataSource.getRepository(Policial);
 
-    const policeRepository = AppDataSource.getRepository(Policial);
+  const police = await policeRepository.findOneBy({ cod_registro });
 
-    const police = await policeRepository.findOneBy({ id });
+  if (!police) {
+    throw new AppError("Invalid id", 404);
+  }
 
-    if(!police) {
-        throw new AppError("Invalid id", 404);
-    }
+  if (police.ativo === false) {
+    throw new AppError("Unable to delete inactive user", 400);
+  }
 
-    if (police.ativo === false) {
-        throw new AppError("Unable to delete inactive user", 400);
-      }
-
-      await policeRepository.update(id, {
-        ativo: false
-      });
-}
+  await policeRepository.update(police.id, { ativo: false });
+};
 
 export default deletePolicialService;

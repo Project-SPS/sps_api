@@ -70,32 +70,37 @@ describe("/procurados", () => {
       .send();
 
     expect(wantedResponse.status).toBe(200);
-    expect(wantedResponse.body[0]).toHaveProperty("id");
-    expect(wantedResponse.body[0]).toHaveProperty("descricao");
-    expect(wantedResponse.body[0]).toHaveProperty("data_criacao");
-    expect(wantedResponse.body[0]).toHaveProperty("data_modificacao");
-    expect(wantedResponse.body[0]).toHaveProperty("esta_ativo");
-    expect(wantedResponse.body[0]).toHaveProperty("cidadao");
+    expect(wantedResponse.body).toHaveProperty("id");
+    expect(wantedResponse.body).toHaveProperty("descricao");
+    expect(wantedResponse.body).toHaveProperty("data_criacao");
+    expect(wantedResponse.body).toHaveProperty("data_modificacao");
+    expect(wantedResponse.body).toHaveProperty("esta_ativo");
+    expect(wantedResponse.body).toHaveProperty("cidadao");
   });
 
-  it("PATCH /procurados/:cpf - Deve ser possível atualizar o status do procurado por CPF", async () => {
+  it("PATCH /procurados/:id - Deve ser possível atualizar o status do procurado por CPF", async () => {
     const adminLoginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const wantedResponse = await request(app)
-      .patch("/procurados/01551551245")
+      .get("/procurados/01551551245")
+      .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+      .send();
+
+    const patchResponse = await request(app)
+      .patch(`/procurados/${wantedResponse.body.id}`)
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
       .send({ esta_ativo: false });
 
-    expect(wantedResponse.status).toBe(200);
-    expect(wantedResponse.body[0]).toHaveProperty("id");
-    expect(wantedResponse.body[0]).toHaveProperty("descricao");
-    expect(wantedResponse.body[0]).toHaveProperty("data_criacao");
-    expect(wantedResponse.body[0]).toHaveProperty("data_modificacao");
-    expect(wantedResponse.body[0]).toHaveProperty("esta_ativo");
-    expect(wantedResponse.body[0].esta_ativo).toBe(false);
-    expect(wantedResponse.body[0]).toHaveProperty("cidadao");
+    expect(patchResponse.status).toBe(200);
+    expect(patchResponse.body).toHaveProperty("id");
+    expect(patchResponse.body).toHaveProperty("descricao");
+    expect(patchResponse.body).toHaveProperty("data_criacao");
+    expect(patchResponse.body).toHaveProperty("data_modificacao");
+    expect(patchResponse.body).toHaveProperty("esta_ativo");
+    expect(patchResponse.body.esta_ativo).toBe(false);
+    expect(patchResponse.body).toHaveProperty("cidadao");
   });
 
-  it("PATCH /procurados/:cpf - Não deve ser possível atualizar a descrição de um procurado", async () => {
+  it("PATCH /procurados/:id - Não deve ser possível atualizar a descrição de um procurado", async () => {
     const adminLoginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const wantedResponse = await request(app)
       .patch("/procurados/01551551245")

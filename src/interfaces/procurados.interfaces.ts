@@ -5,8 +5,14 @@ export interface IProcurados {
   data_modificacao?: Date;
   policialId: string;
   veiculoId?: string;
-  cidadaoId: string;
+  cidadaoId?: string;
+  cpf?: string;
   image?: any;
+}
+
+export interface IProcuradosRequest {
+  cpf: string;
+  descricao: string;
 }
 
 export interface IProcuradosUpdate {

@@ -9,11 +9,11 @@ const createFugitiveServices = async (fugitive: IProcurados, image: any) => {
   const fugitivesRepository = AppDataSource.getRepository(Procurado);
   const citiziensRepository = AppDataSource.getRepository(Cidadao);
 
-  const getCitiezen = await citiziensRepository.findOneBy({
-    id: fugitive.cidadaoId,
+  const getCitizen = await citiziensRepository.findOneBy({
+    cpf: fugitive.cpf,
   });
 
-  if (!getCitiezen) {
+  if (!getCitizen) {
     throw new AppError("Cidadão não encontrado", 404);
   }
   // const cloudinaryImage = await cloudinary.uploader.upload(image.path, (error: Error, result: any) => result);
@@ -22,13 +22,14 @@ const createFugitiveServices = async (fugitive: IProcurados, image: any) => {
   //     console.log(error);
   //   }
   // });
+
   const newFugitive = new Procurado();
 
   newFugitive.descricao = fugitive.descricao;
   if (fugitive.esta_ativo) {
     newFugitive.esta_ativo = fugitive.esta_ativo;
   }
-  newFugitive.cidadao = getCitiezen;
+  newFugitive.cidadao = getCitizen;
 
   await fugitivesRepository.save(newFugitive);
 

@@ -4,9 +4,9 @@ import updateFugitiveService from "../../services/procurados/updateFugitive.serv
 
 const updateFugitiveController = async (req: Request, res: Response) => {
   const body = req.body;
-  const { cpf } = req.params;
+  const { id } = req.params;
 
-  const fugitive = await updateFugitiveService(body, cpf);
+  const fugitive = await updateFugitiveService(body, id);
 
   return res.status(200).json(fugitive);
 };

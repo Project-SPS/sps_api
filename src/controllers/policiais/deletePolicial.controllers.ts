@@ -2,12 +2,11 @@ import { Request, Response } from "express";
 import deletePolicialService from "../../services/policiais/deletePolicial.services";
 
 const deletePolicialController = async (req: Request, res: Response) => {
+  const { cod_registro } = req.params;
 
-    const id = req.params.id;
+  await deletePolicialService(cod_registro);
 
-    const deletePolice = deletePolicialService(id);
-
-    return res.status(204).send(deletePolice);
-}
+  return res.status(204).send();
+};
 
 export default deletePolicialController;
