@@ -85,9 +85,9 @@ export class productionMigration1668018062130 implements MigrationInterface {
         `);
     await queryRunner.query(`
         INSERT INTO policiais (id, patente, senha, administrador, ativo, data_criacao, data_atualizacao, "cidadaoId", cod_registro) VALUES
-            ('d54d0f18-a75e-4033-af45-e4b227afce9e', 'Coronel', '$2a$10$gDRF06cY6P3a9wof8GAMSOWcRUOo/VWJi57VzeD6hAgSq3QTcb9T2', TRUE, TRUE, '20/10/2005', '20/10/2005', '9abcdcbb-2917-430a-94dd-2e1923bfe20d', '976648335'),
-            ('e2e6cfce-1c09-4da1-a42b-e18405ccffa9', 'Cabo', '$2a$10$gDRF06cY6P3a9wof8GAMSOWcRUOo/VWJi57VzeD6hAgSq3QTcb9T2', FALSE, TRUE, '20/10/2005', '20/10/2005', '9c9d4c25-0e14-41c1-8ef2-d8d168d339f7', '715711505'),
-            ('f8f49018-c733-4a16-8ccb-39ab7768432c', 'Comandante Geral', '$2a$10$gDRF06cY6P3a9wof8GAMSOWcRUOo/VWJi57VzeD6hAgSq3QTcb9T2', TRUE, TRUE, '20/10/2005', '20/10/2005', '4f54f298-f52d-446f-af69-29adb59532ba', '312770270')
+            ('d54d0f18-a75e-4033-af45-e4b227afce9e', 'Coronel', '$2a$10$gDRF06cY6P3a9wof8GAMSOWcRUOo/VWJi57VzeD6hAgSq3QTcb9T2', TRUE, TRUE, '2005/10/20', '2005/10/20', '9abcdcbb-2917-430a-94dd-2e1923bfe20d', '976648335'),
+            ('e2e6cfce-1c09-4da1-a42b-e18405ccffa9', 'Cabo', '$2a$10$gDRF06cY6P3a9wof8GAMSOWcRUOo/VWJi57VzeD6hAgSq3QTcb9T2', FALSE, TRUE, '2005/10/20', '2005/10/20', '9c9d4c25-0e14-41c1-8ef2-d8d168d339f7', '715711505'),
+            ('f8f49018-c733-4a16-8ccb-39ab7768432c', 'Comandante Geral', '$2a$10$gDRF06cY6P3a9wof8GAMSOWcRUOo/VWJi57VzeD6hAgSq3QTcb9T2', TRUE, TRUE, '2005/10/20', '2005/10/20', '4f54f298-f52d-446f-af69-29adb59532ba', '312770270')
         `);
 
     await queryRunner.query(`
