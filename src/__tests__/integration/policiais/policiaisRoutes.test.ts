@@ -42,7 +42,7 @@ describe("/policiais", () => {
   });
 
   it("POST /policiais - Deve ser possível criar um policial", async () => {
-    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const adminLoginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const registerResponse = await request(app)
       .post("/policiais")
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
@@ -67,7 +67,7 @@ describe("/policiais", () => {
   });
 
   it("POST /policiais - Não deve ser possível criar um policial não sendo administrador", async () => {
-    const nonAdminLoginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const nonAdminLoginResponse = await request(app).post("/sessions").send(nonAdminPoliceLogin);
     const registerResponse = await request(app)
       .post("/policiais")
       .set("Authorization", `Bearer ${nonAdminLoginResponse.body.token}`)
@@ -78,7 +78,7 @@ describe("/policiais", () => {
   });
 
   it("POST /policiais - Não deve ser possível criar um policial que já existe", async () => {
-    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const adminLoginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const registerResponse = await request(app)
       .post("/policiais")
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
@@ -89,7 +89,7 @@ describe("/policiais", () => {
   });
 
   it("POST /policiais - Não deve ser possível criar um policial sem o código de registro", async () => {
-    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const adminLoginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const registerResponse = await request(app)
       .post("/policiais")
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
@@ -100,7 +100,7 @@ describe("/policiais", () => {
   });
 
   it("POST /policiais - Não deve ser possível criar um policial sem senha", async () => {
-    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const adminLoginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const registerResponse = await request(app)
       .post("/policiais")
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
@@ -111,7 +111,7 @@ describe("/policiais", () => {
   });
 
   it("POST /policiais - Não deve ser possível criar um policial sem patente", async () => {
-    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const adminLoginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const registerResponse = await request(app)
       .post("/policiais")
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
@@ -122,7 +122,7 @@ describe("/policiais", () => {
   });
 
   it("GET /policiais - Deve ser possível listar todos os policiais", async () => {
-    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const adminLoginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const listResponse = await request(app).get("/policiais").set("Authorization", `Bearer ${adminLoginResponse.body.token}`).send();
 
     expect(listResponse.status).toBe(200);
@@ -130,7 +130,7 @@ describe("/policiais", () => {
   });
 
   it("GET /policiais - Não deve ser possível listar todos os policial sem ser administrador", async () => {
-    const nonAdminLoginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const nonAdminLoginResponse = await request(app).post("/sessions").send(nonAdminPoliceLogin);
     const listResponse = await request(app).get("/policiais").set("Authorization", `Bearer ${nonAdminLoginResponse.body.token}`).send();
 
     expect(listResponse.status).toBe(403);
@@ -138,7 +138,7 @@ describe("/policiais", () => {
   });
 
   it("GET /policiais/:cod_registro - Deve ser possível listar um policial por código de registro", async () => {
-    const adminLoginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const adminLoginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const listResponse = await request(app)
       .get(`/policiais/${mockedPolice.cod_registro}`)
       .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
@@ -149,7 +149,7 @@ describe("/policiais", () => {
   });
 
   it("GET /policiais/:cod_registro - Não deve ser possível listar um policial por código de registro sem ser administrador", async () => {
-    const nonAdminLoginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const nonAdminLoginResponse = await request(app).post("/sessions").send(nonAdminPoliceLogin);
     const listResponse = await request(app)
       .get(`/policiais/${mockedPolice.cod_registro}`)
       .set("Authorization", `Bearer ${nonAdminLoginResponse.body.token}`)
@@ -162,7 +162,7 @@ describe("/policiais", () => {
   it("PATCH /policiais/:cod_registro - Deve ser possível o próprio policial atualizar sua senha.", async () => {
     const newPassword = "novaSenha123!";
 
-    const loginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const loginResponse = await request(app).post("/sessions").send(nonAdminPoliceLogin);
     const updateResponse = await request(app)
       .patch(`/policiais/${mockedPolice.cod_registro}`)
       .set("Authorization", `Bearer ${loginResponse.body.token}`)
@@ -183,14 +183,14 @@ describe("/policiais", () => {
 
     nonAdminPoliceLogin.senha = newPassword;
 
-    const newLoginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const newLoginResponse = await request(app).post("/sessions").send(nonAdminPoliceLogin);
 
     expect(newLoginResponse.status).toBe(200);
     expect(newLoginResponse.body).toHaveProperty("token");
   });
 
   it("PATCH /policiais/:cod_registro - Não deve ser possível um policial alterar outro policial.", async () => {
-    const loginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const loginResponse = await request(app).post("/sessions").send(nonAdminPoliceLogin);
     const updateResponse = await request(app)
       .patch(`/policiais/${adminPoliceLogin.cod_registro}`)
       .set("Authorization", `Bearer ${loginResponse.body.token}`)
@@ -207,7 +207,7 @@ describe("/policiais", () => {
       senha: "novaSenha",
     };
 
-    const loginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const loginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const updateResponse = await request(app)
       .patch(`/policiais/${nonAdminPoliceLogin.cod_registro}`)
       .set("Authorization", `Bearer ${loginResponse.body.token}`)
@@ -231,14 +231,14 @@ describe("/policiais", () => {
 
     nonAdminPoliceLogin.senha = updateData.senha;
 
-    const newLoginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const newLoginResponse = await request(app).post("/sessions").send(nonAdminPoliceLogin);
 
     expect(newLoginResponse.status).toBe(200);
     expect(newLoginResponse.body).toHaveProperty("token");
   });
 
   it("DELETE /policiais/:cod_registro - Deve ser possível realizar o soft delete", async () => {
-    const loginResponse = await request(app).post("/login").send(adminPoliceLogin);
+    const loginResponse = await request(app).post("/sessions").send(adminPoliceLogin);
     const deleteResponse = await request(app)
       .delete(`/policiais/${nonAdminPoliceLogin.cod_registro}`)
       .set("Authorization", `Bearer ${loginResponse.body.token}`)
@@ -248,7 +248,7 @@ describe("/policiais", () => {
   });
 
   it("DELELE /policiais/:cod_registro - Não deve ser possível realizar o soft delete sem ser administrador.", async () => {
-    const loginResponse = await request(app).post("/login").send(nonAdminPoliceLogin);
+    const loginResponse = await request(app).post("/sessions").send(nonAdminPoliceLogin);
     const deleteResponse = await request(app)
       .delete(`/policiais/${mockedPolice.cod_registro}`)
       .set("Authorization", `Bearer ${loginResponse.body.token}`)
