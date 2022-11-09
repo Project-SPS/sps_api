@@ -5,14 +5,9 @@ import { AppError } from "../../errors/AppError";
 import { IVehicleRequest } from "../../interfaces/veiculo.interfaces";
 import retrieveVehicleService from "./retrieveVehicle.services";
 
-const createVehicleFineService = async (
-  identifier: string,
-  multaId: string
-) => {
+const createVehicleFineService = async (identifier: string, multaId: string) => {
   const multaRepository = await AppDataSource.getRepository(Multa);
-  const veiculoMultaRepository = await AppDataSource.getRepository(
-    VeiculoMulta
-  );
+  const veiculoMultaRepository = await AppDataSource.getRepository(VeiculoMulta);
 
   const vehicle = await retrieveVehicleService(identifier);
 
@@ -21,7 +16,7 @@ const createVehicleFineService = async (
   });
 
   if (!fine) {
-    throw new AppError("Fine not found", 404);
+    throw new AppError("Multa não encontrada", 404);
   }
 
   await veiculoMultaRepository.save({

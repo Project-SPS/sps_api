@@ -10,7 +10,7 @@ const listCitizenVehiclesService = async (cpf: string): Promise<Veiculo[]> => {
   const citizen = await citizenRepository.findOneBy({ cpf });
 
   if (!citizen) {
-    throw new AppError("Citizen not found", 404);
+    throw new AppError("Cidadão não encontrado", 404);
   }
 
   const vehicles = await vehicleRepository.find({

@@ -8,11 +8,11 @@ const deletePolicialService = async (cod_registro: string): Promise<void> => {
   const police = await policeRepository.findOneBy({ cod_registro });
 
   if (!police) {
-    throw new AppError("Invalid id", 404);
+    throw new AppError("ID inválido", 404);
   }
 
   if (police.ativo === false) {
-    throw new AppError("Unable to delete inactive user", 400);
+    throw new AppError("O usuário já está inativo", 400);
   }
 
   await policeRepository.update(police.id, { ativo: false });

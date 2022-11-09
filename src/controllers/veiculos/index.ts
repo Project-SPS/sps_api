@@ -1,9 +1,5 @@
 import { Request, Response } from "express";
-import {
-  ICitizenVehiclesRequest,
-  ICreateVehicleFineRequest,
-  IVehicleRequest,
-} from "../../interfaces/veiculo.interfaces";
+import { ICitizenVehiclesRequest, ICreateVehicleFineRequest, IVehicleRequest } from "../../interfaces/veiculo.interfaces";
 import createVehicleFineService from "../../services/veiculos/createVehicleFine.services";
 import listCitizenVehiclesService from "../../services/veiculos/listCitizenVehicles.services";
 import listVehicleFinesService from "../../services/veiculos/listVehicleFines.services";
@@ -32,13 +28,8 @@ const createVehicleFineController = async (req: Request, res: Response) => {
   const { multaId }: ICreateVehicleFineRequest = req.body;
   await createVehicleFineService(identifier, multaId);
   return res.status(201).send({
-    message: "Vehicle fine created",
+    message: "Multa aplicada",
   });
 };
 
-export {
-  retrieveVehicleController,
-  listCitizenVehiclesController,
-  listVehicleFinesController,
-  createVehicleFineController,
-};
+export { retrieveVehicleController, listCitizenVehiclesController, listVehicleFinesController, createVehicleFineController };
